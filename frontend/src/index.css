@@ -1,0 +1,31 @@
+.app {
+    background: black
+}
+
+.home-login-register {
+    border-radius: 30px;
+}
+
+.home-login-register:hover {
+    background-color: rgb(20, 110, 110);
+    border-color: black;
+}
+
+.home-login-register:active {
+    background-color: rgb(20, 110, 110);
+    border-color: black;
+}
+
+.home-login-register:focus {
+    background-color: rgb(20, 110, 110);
+    border-color: black;
+}
+
+.user-form {
+    display: flex;
+    background-color: grey;
+    flex-direction: column;
+    padding: 12px;
+    border-radius: 6px;
+
+}
