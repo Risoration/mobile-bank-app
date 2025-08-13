@@ -1,5 +1,4 @@
 import { Button, Flex, Heading, Input, Stack } from '@chakra-ui/react';
-
 import { useNavigate } from 'react-router-dom';
 import { PasswordInput } from '../components/ui/password-input';
 import { Field } from '../components/ui/field';
@@ -20,7 +19,7 @@ const Login = () => {
     const { email, password } = data;
 
     try {
-      const { data } = await axios.post('/login', {
+      const { data } = await axios.post('/api/login', {
         email,
         password,
       });
@@ -42,25 +41,12 @@ const Login = () => {
       justifyContent={'center'}
       justifyItems={'center'}
     >
-      <form
-        onSubmit={loginUser}
-        className='user-form'
-      >
-        <Flex
-          //direction={'column'}
-          rounded={6}
-        >
-          <Heading
-            mb={6}
-            size={'3xl'}
-          >
+      <form onSubmit={loginUser}>
+        <Flex direction={'column'} bg='#4d4949' p={12} rounded={6}>
+          <Heading mb={6} size={'3xl'}>
             Login
           </Heading>
-          <Stack
-            gap={'4'}
-            align={'flex-start'}
-            maxW={'sm'}
-          >
+          <Stack gap={'4'} align={'flex-start'} maxW={'sm'}>
             <Field label={'Email'}>
               <Input
                 placeholder='Email'
@@ -81,10 +67,7 @@ const Login = () => {
                   })
                 }
               ></PasswordInput>
-              <Flex
-                direction={'column'}
-                w={'100%'}
-              ></Flex>
+              <Flex direction={'column'} w={'100%'}></Flex>
             </Field>
             <Button
               type={'submit'}

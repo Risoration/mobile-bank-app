@@ -3,7 +3,6 @@ import { PasswordInput } from '../components/ui/password-input';
 import { Field } from '../components/ui/field';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-
 import { PasswordStrengthMeter } from '../components/ui/password-input';
 import { useState } from 'react';
 import axios from 'axios';
@@ -16,17 +15,24 @@ const Register = () => {
     firstname: '',
     lastname: '',
     password: '',
+    confirmPassword: '',
   });
 
   const registerUser = async (e) => {
     e.preventDefault();
 
-    const { email, firstname, lastname, password } = data;
+    const { email, firstname, lastname, password, confirmPassword } = data;
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
 
     console.log(email, firstname, lastname, password);
 
     try {
-      const { data } = await axios.post('/register', {
+      const { data } = await axios.post('/api/register', {
         email,
         firstname,
         lastname,
@@ -40,6 +46,7 @@ const Register = () => {
           firstname: '',
           lastname: '',
           password: '',
+          confirmPassword: '',
         });
         toast.success('Registered Successfully');
         navigate('/login');
@@ -75,32 +82,13 @@ const Register = () => {
   const strength = calculatePasswordStrength();
 
   return (
-    <Flex
-      height={'100vh'}
-      alignItems={'center'}
-      justifyContent={'center'}
-    >
-      <form
-        onSubmit={registerUser}
-        className='form'
-      >
-        <Flex
-          direction={'column'}
-          bg={formBackground}
-          p={12}
-          rounded={6}
-        >
-          <Heading
-            mb={6}
-            size={'3xl'}
-          >
+    <Flex height={'100vh'} alignItems={'center'} justifyContent={'center'}>
+      <form onSubmit={registerUser}>
+        <Flex direction={'column'} bg='#4d4949' p={12} rounded={6}>
+          <Heading mb={6} size={'3xl'}>
             Register
           </Heading>
-          <Stack
-            gap={'4'}
-            align={'flex-start'}
-            maxW={'sm'}
-          >
+          <Stack gap={'4'} align={'flex-start'} maxW={'sm'}>
             <Field label={'Email'}>
               <Input
                 placeholder='Email'
@@ -149,15 +137,8 @@ const Register = () => {
                   });
                 }}
               ></PasswordInput>
-              <Flex
-                direction={'column'}
-                w={'100%'}
-              >
-                <PasswordStrengthMeter
-                  value={strength}
-                  p={'5px'}
-                  w={'100%'}
-                />
+              <Flex direction={'column'} w={'100%'}>
+                <PasswordStrengthMeter value={strength} p={'5px'} w={'100%'} />
               </Flex>
             </Field>
 
@@ -167,6 +148,12 @@ const Register = () => {
                 variant={'outline'}
                 size={'2xl'}
                 type='password'
+                onChange={(e) => {
+                  setData({
+                    ...data,
+                    confirmPassword: e.target.value,
+                  });
+                }}
               ></PasswordInput>
             </Field>
 

@@ -2,21 +2,26 @@
     background: black
 }
 
-.home-login-register {
+.title {
+    text-align: center;
+}
+
+.log-button {
     border-radius: 30px;
+    font-size: xx-large;
 }
 
-.home-login-register:hover {
+.log-button:hover {
     background-color: rgb(20, 110, 110);
     border-color: black;
 }
 
-.home-login-register:active {
+.log-button:active {
     background-color: rgb(20, 110, 110);
     border-color: black;
 }
 
-.home-login-register:focus {
+.log-button:focus {
     background-color: rgb(20, 110, 110);
     border-color: black;
 }
@@ -27,5 +32,4 @@
     flex-direction: column;
     padding: 12px;
     border-radius: 6px;
-
 }
