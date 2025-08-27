@@ -1,6 +1,7 @@
 import UserModel from '../models/user.js';
 import { hashPassword, comparePasswords } from '../helpers/auth.js';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 export const test = async (req, res) => {
   res.json('test is working');
@@ -85,7 +86,12 @@ export const loginUser = async (req, res) => {
 
     // If passwords match, generate JWT token
     jwt.sign(
-      { email: user.email, id: user._id, firstname: user.firstname },
+      {
+        email: user.email,
+        id: user._id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+      },
       process.env.JWT_SECRET,
       {},
       (error, token) => {
@@ -112,6 +118,22 @@ export const getProfile = async (req, res) => {
     });
   } else {
     res.json(null);
-    console.log('Invalid token');
+  }
+};
+
+//logout endpoint
+export const logoutUser = async (req, res) => {
+  try {
+    // Clear the JWT token cookie
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+    });
+
+    res.json({ message: 'Logged out successfully' });
+  } catch (error) {
+    console.log('Logout error:', error.message);
+    res.json({ error: 'An error occurred during logout' });
   }
 };

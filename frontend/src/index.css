@@ -1,14 +1,20 @@
-.app {
-    background: black
+@import "tailwindcss";
+
+body {
+    font-family: sans-serif;
 }
 
-.title {
-    text-align: center;
+.app {
+    background: black;
+    font-weight: 100;
 }
 
 .log-button {
-    border-radius: 30px;
+    border-radius: 25px;
     font-size: xx-large;
+    color: white;
+    margin: 4px;
+    padding: 4px;
 }
 
 .log-button:hover {
@@ -32,4 +38,8 @@
     flex-direction: column;
     padding: 12px;
     border-radius: 6px;
+}
+
+.h1 {
+    font-weight: 100;
 }

@@ -1,25 +1,9 @@
-import { Flex, Heading, Text, Stack } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
-import '../index.css';
-import { useContext } from 'react';
-
-const Home = () => {
-  const navigate = useNavigate();
+export function Home() {
   return (
-    <Flex
-      height='100vh'
-      direction='row' // Align items horizontally
-      alignItems={'flex-starts'} // Align items at the top
-      justifyContent={'center'} // Center items horizontally in the container
-      px={'20px'}
-      gap='20px' // Add spacing between elements
-    >
-      {/* Center */}
-      <Heading textAlign={'center'} size={'3xl'} className='title'>
-        Welcome to Revolve
-      </Heading>
-    </Flex>
+    <div className='justify-center text-center'>
+      <h1 className='text-white text-3xl font-bold'>
+        Take control of your Finances
+      </h1>
+    </div>
   );
-};
-
-export default Home;
+}

@@ -1,18 +1,21 @@
-import { Button, Flex, Heading, Input, Stack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { PasswordInput } from '../components/ui/password-input';
-import { Field } from '../components/ui/field';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { UserContext } from '../../context/userContext';
+import Button from '../components/ui/Button';
+import '../index.css';
+import PasswordInput from '../components/ui/password-input';
+import InputField from '../components/ui/InputField';
 
-const Login = () => {
+const Login = ({ switchToRegister, setModalOpen }) => {
   const [data, setData] = useState({
     email: '',
     password: '',
   });
 
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   const loginUser = async (e) => {
     e.preventDefault();
@@ -26,74 +29,66 @@ const Login = () => {
       if (data.error) {
         toast.error(data.error);
       } else {
+        // Update user context with the logged-in user data
+        setUser(data);
+
+        // Clear form data
         setData({ email: '', password: '' });
-        navigate('/dashboard');
+
+        setModalOpen(false);
+
+        // Navigate to main page
+        navigate('/main');
+
+        toast.success('Login successful!');
       }
     } catch (error) {
       console.log(error);
+      toast.error('Login failed. Please try again.');
     }
   };
 
   return (
-    <Flex
-      height={'100vh'}
-      alignItems={'center'}
-      justifyContent={'center'}
-      justifyItems={'center'}
-    >
+    <div className='h-screen flex items-center justify-center'>
       <form onSubmit={loginUser}>
-        <Flex direction={'column'} bg='#4d4949' p={12} rounded={6}>
-          <Heading mb={6} size={'3xl'}>
-            Login
-          </Heading>
-          <Stack gap={'4'} align={'flex-start'} maxW={'sm'}>
-            <Field label={'Email'}>
-              <Input
-                placeholder='Email'
-                variant={'outline'}
-                size={'2xl'}
-                onChange={(e) => setData({ ...data, email: e.target.value })}
-              />
-            </Field>
-            <Field label={'Password'}>
-              <PasswordInput
-                placeholder='Password'
-                type='password'
-                size={'2xl'}
-                onChange={(e) =>
-                  setData({
-                    ...data,
-                    password: e.target.value,
-                  })
-                }
-              ></PasswordInput>
-              <Flex direction={'column'} w={'100%'}></Flex>
-            </Field>
+        <div className='flex flex-col bg-[#4d4949] p-12 rounded-md justify-between h-full'>
+          <h1 className='mb-6 text-4xl text-white font-sans'>Login</h1>
+          <div className='flex flex-col gap-4 items-start max-w-sm'>
+            <InputField
+              placeholder='Email'
+              onChange={(e) => setData({ ...data, email: e.target.value })}
+            />
+            <PasswordInput
+              placeholder='Password'
+              type='password'
+              className='w-full placeholder:text-sm placeholder-white text-white px-3 py-2 border border-gray-300 rounded-md text-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  password: e.target.value,
+                })
+              }
+            />
             <Button
-              type={'submit'}
-              className='submit_button'
-              bgColor={'white'}
-              color={'black'}
-              alignSelf={'center'}
-              w={'100%'}
+              type='submit'
+              variant='submit'
+              className='self-center w-full'
             >
               Login
-              {/* <Link to={'/home'}>Login</Link> */}
             </Button>
-            <Button
-              type={'button'}
-              bgColor={'grey'}
-              color={'white'}
-              alignSelf={'center'}
-              w={'100%'}
-              onClick={() => navigate('/register')}
+          </div>
+          <p className='text-white/50 self-center'>
+            Not a Member?
+            <a
+              className='cursor-pointer hover:text-purple-400 transition-colors duration-100 underline'
+              onClick={switchToRegister}
             >
-              Register
-            </Button>
-          </Stack>
-        </Flex>
+              Sign up now
+            </a>
+          </p>
+        </div>
       </form>
-    </Flex>
+    </div>
   );
 };
 

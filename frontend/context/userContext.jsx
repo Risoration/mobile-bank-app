@@ -15,6 +15,9 @@ export function UserContextProvider({ children }) {
         const { data } = await axios.get('/api/profile');
         if (data) {
           setUser(data);
+          console.log('User authenticated:', data);
+        } else {
+          setUser(null);
         }
       } catch (error) {
         console.log(

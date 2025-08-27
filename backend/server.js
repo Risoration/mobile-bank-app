@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoutes.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
+// Load .env file from the backend directory
 dotenv.config();
 
 const app = express();

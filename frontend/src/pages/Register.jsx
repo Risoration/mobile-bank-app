@@ -1,13 +1,13 @@
-import { Flex, Button, Heading, Input, Stack } from '@chakra-ui/react';
 import { PasswordInput } from '../components/ui/password-input';
-import { Field } from '../components/ui/field';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { PasswordStrengthMeter } from '../components/ui/password-input';
 import { useState } from 'react';
 import axios from 'axios';
+import Button from '../components/ui/Button';
+import InputField from '../components/ui/InputField';
 
-const Register = () => {
+const Register = ({ switchToLogin }) => {
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -82,95 +82,72 @@ const Register = () => {
   const strength = calculatePasswordStrength();
 
   return (
-    <Flex height={'100vh'} alignItems={'center'} justifyContent={'center'}>
+    <div className='h-screen flex items-center justify-center'>
       <form onSubmit={registerUser}>
-        <Flex direction={'column'} bg='#4d4949' p={12} rounded={6}>
-          <Heading mb={6} size={'3xl'}>
-            Register
-          </Heading>
-          <Stack gap={'4'} align={'flex-start'} maxW={'sm'}>
-            <Field label={'Email'}>
-              <Input
-                placeholder='Email'
-                variant={'outline'}
-                size={'2xl'}
-                onChange={(e) => {
-                  setData({ ...data, email: e.target.value });
-                }}
-              />
-            </Field>
-            <Field label={'First Name'}>
-              <Input
-                placeholder='First name'
-                variant={'outline'}
-                size={'2xl'}
-                onChange={(e) => {
-                  setData({
-                    ...data,
-                    firstname: e.target.value,
-                  });
-                }}
-              />
-            </Field>
-            <Field label={'Last Name'}>
-              <Input
-                placeholder='Last name'
-                variant={'outline'}
-                size={'2xl'}
-                onChange={(e) => {
-                  setData({
-                    ...data,
-                    lastname: e.target.value,
-                  });
-                }}
-              />
-            </Field>
-            <Field label={'Password'}>
-              <PasswordInput
-                placeholder='Password'
-                type='password'
-                size={'2xl'}
-                onChange={(e) => {
-                  setData({
-                    ...data,
-                    password: e.target.value,
-                  });
-                }}
-              ></PasswordInput>
-              <Flex direction={'column'} w={'100%'}>
-                <PasswordStrengthMeter value={strength} p={'5px'} w={'100%'} />
-              </Flex>
-            </Field>
+        <div className='flex flex-col bg-[#4d4949] p-12 rounded-md'>
+          <h1 className='mb-6 text-4xl text-white'>Register</h1>
+          <div className='flex flex-col gap-4 items-start max-w-sm'>
+            <InputField
+              placeholder='Email'
+              onChange={(e) => setData({ ...data, email: e.target.value })}
+            />
+            <InputField
+              placeholder='First Name'
+              onChange={(e) => setData({ ...data, firstname: e.target.value })}
+            />
+            <InputField
+              placeholder='Last Name'
+              onChange={(e) => setData({ ...data, lastname: e.target.value })}
+            />
 
-            <Field label='Re-enter Password'>
-              <PasswordInput
-                placeholder='Re-enter Password'
-                variant={'outline'}
-                size={'2xl'}
-                type='password'
-                onChange={(e) => {
-                  setData({
-                    ...data,
-                    confirmPassword: e.target.value,
-                  });
-                }}
-              ></PasswordInput>
-            </Field>
+            <PasswordInput
+              placeholder='Password'
+              type='password'
+              size='2xl'
+              onChange={(e) => {
+                setData({
+                  ...data,
+                  password: e.target.value,
+                });
+              }}
+            />
+            <div className='flex flex-col w-full'>
+              <PasswordStrengthMeter value={strength} p={'5px'} w={'100%'} />
+            </div>
+            <PasswordInput
+              placeholder='Re-enter Password'
+              variant={'outline'}
+              size='2xl'
+              type='password'
+              onChange={(e) => {
+                setData({
+                  ...data,
+                  confirmPassword: e.target.value,
+                });
+              }}
+            />
 
             <Button
-              type={'submit'}
-              className='submit_button'
-              bgColor={'teal'}
-              color={'white'}
-              alignSelf={'center'}
-              w={'100%'}
+              type='submit'
+              variant='register'
+              size='lg'
+              className='self-center w-full'
             >
               Register
             </Button>
-          </Stack>
-        </Flex>
+          </div>
+          <p className='text-white/50 self-center'>
+            Already a Member?
+            <a
+              className='cursor-pointer hover:text-purple-400 transition-colors duration-100 underline'
+              onClick={switchToLogin}
+            >
+              Log in here
+            </a>
+          </p>
+        </div>
       </form>
-    </Flex>
+    </div>
   );
 };
 export default Register;
