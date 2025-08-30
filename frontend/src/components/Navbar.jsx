@@ -65,7 +65,6 @@ const Navbar = ({ openLogin, openRegister }) => {
 
       {/* Right side */}
       <div className='flex'>
-        {/* Show these buttons when user is NOT logged in */}
         {!user && (
           <>
             <Button variant='ghost' size='sm' onClick={openLogin}>
