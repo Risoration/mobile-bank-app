@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { SettingsContext } from '../../context/settingsContext.tsx';
 import { useTheme } from '../../context/themeContext.tsx';
 import React from 'react';
+import { Card } from './ui/Card.jsx';
 
 export default function Settings() {
   const {
@@ -18,11 +19,11 @@ export default function Settings() {
   const { darkMode, toggleDarkMode } = useTheme();
 
   return (
-    <div className='text-white'>
+    <div className='text-slate-900 dark:text-slate-300  '>
       <div className='flex flex-row justify-between'>
         <div>
           <div className='flex justify-center flex-col'>
-            <h1 className='flex text-3xl text-white font-bold'>Settings</h1>
+            <h1 className='flex text-3xl font-bold'>Settings</h1>
           </div>
         </div>
         <Button variant='register'>
@@ -32,21 +33,25 @@ export default function Settings() {
       </div>
 
       <div className='flex justify-center gap-6'>
-        <section className='flex flex-col items-center rounded-2xl border border-white/10 p-4 bg-black/30'>
+        <Card className='p-2'>
           <h2 className='text-lg font-semibold mb-1'>Theme</h2>
           <div className='form-check form-switch !bg-green'>
             <input
               className='form-check-input'
               type='checkbox'
-              value=''
               id='checkDarkMode'
-              onClick={() => toggleDarkMode()}
+              checked={darkMode}
+              onChange={() => toggleDarkMode()}
             />
-            Dark Mode
+            {darkMode ? (
+              <Moon className='w-5 h-5' />
+            ) : (
+              <Sun className='w-5 h-5' />
+            )}
             <label className='form-check-label' htmlFor='checkDarkMode' />
           </div>
           <h2 className='text-lg font-semibold my-3'>Currency</h2>
-        </section>
+        </Card>
       </div>
     </div>
   );

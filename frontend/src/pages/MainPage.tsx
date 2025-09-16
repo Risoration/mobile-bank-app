@@ -48,16 +48,17 @@ export default function MainPage() {
 
   return (
     <div
-      className={`min-h-screen font-thin dark:bg-gray-900 dark:text-gray-100 bg-gray-100 text-gray-900`}
+      className={`h-full font-thin bg-gray-100 text-gray-900 
+                 dark:bg-slate-950 dark:text-gray-100`}
     >
-      <div className='flex justify-between m-3 h-fit bg-gray-100 dark:bg-gray-900'>
+      <div className='flex justify-between m-3 h-fit bg-gray-100 dark:bg-slate-950'>
         {/* Sidebar */}
         <Sidebar onViewChange={setPageView} />
 
         {/* Main Content */}
         <main
           className={
-            ' flex-1 p-6 overflow-y-auto rounded-2xl dark:bg-teal-900 dark:text-gray-100 bg-teal-100 text-gray-900'
+            'flex-1 p-6 overflow-y-auto rounded-2xl bg-slate text-gray-900 dark:bg-teal-900 dark:text-gray-100 mb-2'
           }
         >
           {pageView === 'dashboard' && (

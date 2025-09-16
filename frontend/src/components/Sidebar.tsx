@@ -8,7 +8,7 @@ import {
   Building,
 } from 'lucide-react';
 import type { User } from '../../../shared/user';
-import { useTheme } from '../../context/themeContext';
+import Button from './ui/Buttons/Button';
 
 interface SidebarProps {
   user: User;
@@ -29,28 +29,23 @@ const navigation = [
 export default function Sidebar({ onViewChange }) {
   return (
     <aside
-      className={`w-42 shadow-md p-4 flex flex-col items-center
-                  rounded-2xl h-screen mr-5 dark:bg-gray-900 dark:text-gray-100
-                bg-gray-100 text-gray-900
-                `}
+      className='w-55 shadow-md p-4 flex flex-col items-center rounded-2xl h-screen mr-5
+                 bg-gray-100 text-gray-900 dark:bg-slate-900 dark:text-white'
     >
       <nav className='flex flex-col w-full'>
         {navigation.map((item) => {
           const Icon = item.icon;
 
           return (
-            <button
+            <Button
               key={item.id}
+              variant='aside'
+              className='text-center'
               onClick={() => onViewChange(item.id)}
-              className={`flex items-center gap-2 w-full mb-4 px-4 py-3
-                          rounded-2xl font-medium cursor-pointer
-                        bg-gray-200 hover:bg-teal-200
-                        text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-teal-700
-                      `}
             >
               <Icon className='w-5 h-5' />
               <span>{item.label}</span>
-            </button>
+            </Button>
           );
         })}
       </nav>

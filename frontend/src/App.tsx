@@ -21,16 +21,11 @@ const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalView, setModalView] = useState<ModalView>('input');
 
-  const { darkMode } = useTheme();
   return (
     <UserContextProvider>
       <SettingsProvider>
         <ThemeProvider>
-          <div>
-            <div className='p-4 bg-white dark:bg-black text-black dark:text-white'>
-              Test Theme
-            </div>
-
+          <div className='bg-slate-50 dark:bg-slate-950 max-h-screen overflow-y-auto'>
             <Navbar
               openLogin={() => {
                 setModalView('login');

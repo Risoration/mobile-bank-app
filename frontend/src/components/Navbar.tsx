@@ -32,9 +32,9 @@ const Navbar = ({ openLogin }) => {
 
   return (
     <div
-      className='
-        h-[50px] flex items-center justify-between flex-col sm:flex-row mt-2
-        text-gray-900 dark:text-gray-100
+      className='h-[50px] flex items-center justify-between flex-col sm:flex-row 
+      bg-slate-50  text-slate-200 
+      dark:bg-slate-950 dark:text-white 
       '
     >
       {/* Logo */}
@@ -42,7 +42,7 @@ const Navbar = ({ openLogin }) => {
         className='
           px-10 text-[25px] font-extrabold uppercase text-center cursor-pointer
           text-gray-900 hover:text-teal-600
-          dark:text-white dark:hover:text-teal-400
+          dark:text-gray-50 dark:hover:text-teal-400
         '
         onClick={user ? () => navigate('/main') : () => navigate('/home')}
       >
@@ -51,19 +51,6 @@ const Navbar = ({ openLogin }) => {
 
       {/* Right side */}
       <div className='flex items-center gap-4 text-center'>
-        {/* Theme toggle button */}
-        <button
-          onClick={toggleDarkMode}
-          className='p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition'
-          aria-label='Toggle theme'
-        >
-          {darkMode ? (
-            <Sun className='w-5 h-5 text-yellow-400' />
-          ) : (
-            <Moon className='w-5 h-5 text-gray-800' />
-          )}
-        </button>
-
         {!user && (
           <Button variant='success' onClick={openLogin}>
             <div className='mr-2'>
@@ -75,9 +62,24 @@ const Navbar = ({ openLogin }) => {
 
         {user && (
           <>
-            <h1 className='flex text-gray-900 dark:text-white w-fit text-lg items-center font-bold'>
+            <h1 className='flex w-fit text-lg items-center font-bold'>
               {user?.firstname + ' ' + user?.lastname || 'User'}
             </h1>
+            <div className='form-check form-switch !bg-green'>
+              <input
+                className='form-check-input'
+                type='checkbox'
+                id='checkDarkMode'
+                checked={darkMode}
+                onChange={() => toggleDarkMode()}
+              />
+              {darkMode ? (
+                <Moon className='w-5 h-5' />
+              ) : (
+                <Sun className='w-5 h-5' />
+              )}
+              <label className='form-check-label' htmlFor='checkDarkMode' />
+            </div>
             <div className='flex flex-row ml-5 gap-2'>
               <Button variant='success' onClick={() => navigate('/main')}>
                 My Dashboard

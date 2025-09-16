@@ -42,7 +42,7 @@ export default function Accounts({ accounts }: AccountsProps) {
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
           {accounts.map((acc: any) => (
             <Card key={acc.account_id || acc.id}>
-              <CardContent className='rounded-2xl border border-white/10'>
+              <CardContent>
                 <div className='flex items-baseline justify-between'>
                   <h2 className='text-xl font-semibold'>
                     {acc.name || acc.official_name || 'Account'}

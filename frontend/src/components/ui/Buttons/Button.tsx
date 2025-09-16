@@ -50,17 +50,15 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseClasses =
-      'flex bg-grape text-black dark:text-white justify-between text-center font-medium cursor-pointer rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed h-fit m-2';
+      'flex justify-between text-center items-center font-medium cursor-pointer rounded-md transition-colors h-fit m-2';
 
     const variants = {
       primary: ' border border-blue-600',
       secondary: 'text-gray-300 border border-gray-600',
-      outline: 'text-blue-600 border border-blue-600 hover:bg-teal-400',
-      ghost: 'text-gray-300 border border-transparent hover:bg-teal-700 w-fit',
-      success: ' border rounded-md hover:bg-teal-700',
+      success:
+        ' border rounded-md hover:bg-teal-700 dark:hover:bg-slate-200 dark:hover:text-slate-950',
       danger: ' border border-red-600 hover:bg-red-700',
-      warning: ' hover:bg-yellow-700 bg-yellow-800',
-      aside: 'text-gray-300 border border-transparent hover:bg-teal-700 w-full',
+      aside: `text-slate-200 border w-full bg-teal-900 hover:bg-teal-700 text-slate-900 dark:bg-teal-500 dark:hover-teal-400 dark:text-slate-200`,
       submit: 'text-teal-500 bg-white hover:bg-teal-500 hover: justify-center',
       register:
         ' border border-teal bg-teal-500 hover:bg-white hover:text-teal-500 justify-center',

@@ -44,7 +44,7 @@ export default function Dashboard({ accounts, transactions }) {
   const net = totals.income - totals.expenses;
 
   return (
-    <div className='flex-1 p-6 overflow-y-auto bg-slate-100 dark:bg-teal-900 rounded-2xl'>
+    <div className='flex-1 p-6 overflow-y-auto bg-slate dark:bg-slate-950 rounded-2xl'>
       {/* Header */}
       <div className='flex flex-row justify-between'>
         <div>
