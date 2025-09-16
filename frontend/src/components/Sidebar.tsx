@@ -1,21 +1,14 @@
 import React from 'react';
-import Button from './ui/Button';
 import {
   Building2,
-  ArrowLeftRight,
   PieChart,
   FileText,
-  Crown,
-  ChartNoAxesCombined,
-  CreditCard,
-  ArrowDownCircle,
   Settings,
   ArrowLeftCircle,
   Building,
 } from 'lucide-react';
-
 import type { User } from '../../../shared/user';
-import { cn } from '../lib/utils';
+import { useTheme } from '../../context/themeContext';
 
 interface SidebarProps {
   user: User;
@@ -33,29 +26,31 @@ const navigation = [
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
-export default function Sidebar({ user, activeView, onViewChange, onUpgrade }) {
+export default function Sidebar({ onViewChange }) {
   return (
-    <aside className='w-42 shadow-md p-4 flex flex-col items-center rounded-2xl h-screen mr-5'>
-      <nav>
+    <aside
+      className={`w-42 shadow-md p-4 flex flex-col items-center
+                  rounded-2xl h-screen mr-5 dark:bg-gray-900 dark:text-gray-100
+                bg-gray-100 text-gray-900
+                `}
+    >
+      <nav className='flex flex-col w-full'>
         {navigation.map((item) => {
           const Icon = item.icon;
-          const isActive = activeView === item.id;
-          const isPremiumFeature =
-            item.premium && user.subscriptionTier === 'free';
 
           return (
-            <Button
+            <button
               key={item.id}
-              onClick={() => !isPremiumFeature && onViewChange(item.id)}
-              variant='primary'
-              className={cn(
-                isActive
-                  ? 'bg-blue-50 text-blue-600'
-                  : isPremiumFeature
-                  ? 'text-slate-400 cursor-not-allowed'
-                  : 'text-slate-600 hover:bg-slate-50'
-              )}
-            ></Button>
+              onClick={() => onViewChange(item.id)}
+              className={`flex items-center gap-2 w-full mb-4 px-4 py-3
+                          rounded-2xl font-medium cursor-pointer
+                        bg-gray-200 hover:bg-teal-200
+                        text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-teal-700
+                      `}
+            >
+              <Icon className='w-5 h-5' />
+              <span>{item.label}</span>
+            </button>
           );
         })}
       </nav>
