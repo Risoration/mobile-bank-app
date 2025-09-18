@@ -21,13 +21,15 @@ export default function Accounts({ accounts }: AccountsProps) {
   };
 
   return (
-    <div className='text-white'>
+    <div className=''>
       <div className='flex flex-row justify-between'>
         <div>
-          <div className='flex justify-center flex-col'>
-            <h1 className='flex text-3xl text-white font-bold'>Accounts</h1>
+          <div className='flex justify-center flex-col text-[color:rgb(var(--color-theme-text-primary))]'>
+            <h1 className='flex text-3xl font-bold'>Accounts</h1>
           </div>
-          <p className='text-gray-400'>Here's your financial overview</p>
+          <p className='text-[color:rgb(var(--color-theme-text-secondary))]'>
+            Here's your financial overview
+          </p>
         </div>
         <ConnectBankButton></ConnectBankButton>
       </div>
@@ -43,31 +45,31 @@ export default function Accounts({ accounts }: AccountsProps) {
           {accounts.map((acc: any) => (
             <Card key={acc.account_id || acc.id}>
               <CardContent>
-                <div className='flex items-baseline justify-between'>
+                <div className='flex items-baseline justify-between text-[color:rgb(var(--color-theme-text-primary))]'>
                   <h2 className='text-xl font-semibold'>
                     {acc.name || acc.official_name || 'Account'}
                   </h2>
                   {acc.mask && (
-                    <span className='text-sm text-gray-300'>
+                    <span className='text-sm text-[color:rgb(var(--color-theme-text-primary))]'>
                       •••• {acc.mask}
                     </span>
                   )}
                 </div>
 
-                <div className='mt-1 text-sm text-gray-300'>
+                <div className='mt-1 text-sm text-[color:rgb(var(--color-theme-text-secondary))]'>
                   {(acc.subtype || acc.type) && (
                     <span>{acc.subtype || acc.type}</span>
                   )}
                 </div>
 
                 <div className='mt-4'>
-                  <div className='text-2xl font-bold'>
+                  <div className='text-2xl font-bold text-[color:rgb(var(--color-theme-text-secondary))]'>
                     {formatCurrency(
                       acc?.balances?.current,
                       acc?.balances?.iso_currency_code
                     )}
                   </div>
-                  <div className='text-sm text-gray-300'>
+                  <div className='text-sm text-[color:rgb(var(--color-theme-text-secondary))]'>
                     Available:{' '}
                     {formatCurrency(
                       acc?.balances?.available,

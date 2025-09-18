@@ -24,6 +24,11 @@ const userschema = mongoose.Schema(
       required: false,
       default: null,
     },
+    plaidCursor: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
 
   {

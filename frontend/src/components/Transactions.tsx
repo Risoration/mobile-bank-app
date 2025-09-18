@@ -37,10 +37,12 @@ export default function Transactions({
   };
 
   return (
-    <div className='text-white'>
-      <h1 className='text-3xl font-bold mb-4 text-center'>Transactions</h1>
+    <div className=''>
+      <h1 className='text-3xl font-bold mb-4 text-center text-[color:rgb(var(--color-theme-text-primary))]'>
+        Transactions
+      </h1>
 
-      {/* <div className='mb-6 flex flex-col sm:flex-row items-center justify-between gap-3'>
+      <div className='mb-6 flex flex-col sm:flex-row items-center justify-between gap-3'>
         <div className='flex items-center gap-2'>
           <label className='text-sm text-gray-300'>Start</label>
           <input
@@ -61,10 +63,10 @@ export default function Transactions({
             className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/20'
           />
         </div>
-      </div> */}
+      </div>
 
       {!transactions?.length && (
-        <div className='text-center text-gray-300'>
+        <div className='text-center text-[color:rgb(var(--color-theme-text-secondary))]'>
           No transactions found. Connect a bank or adjust the date range.
         </div>
       )}

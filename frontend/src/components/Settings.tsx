@@ -19,7 +19,7 @@ export default function Settings() {
   const { darkMode, toggleDarkMode } = useTheme();
 
   return (
-    <div className='text-slate-900 dark:text-slate-300  '>
+    <div className='text-[color:rgb(var(--color-theme-text-primary))]'>
       <div className='flex flex-row justify-between'>
         <div>
           <div className='flex justify-center flex-col'>
@@ -51,6 +51,9 @@ export default function Settings() {
             <label className='form-check-label' htmlFor='checkDarkMode' />
           </div>
           <h2 className='text-lg font-semibold my-3'>Currency</h2>
+          <div className='dropdown'>
+            <button></button>
+          </div>
         </Card>
       </div>
     </div>

@@ -1,86 +1,52 @@
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
-
-/* Teal Theme CSS for Tailwind CSS */
+/* Teal Theme CSS for Tailwind v4 */
 /* Professional Teal (Light) & Midnight Teal (Dark) */
 
-:root {
-  /* Light Mode - Professional Teal */
-  --color-primary: 15 118 110; /* teal-700 */
-  --color-background: 254 254 254;
-  --color-surface: 241 245 249; /* slate-100 */
-  --color-text-primary: 30 41 59; /* slate-800 */
-  --color-text-secondary: 100 116 139; /* slate-500 */
-  --color-accent: 6 182 212; /* cyan-500 */
-  --color-border: 203 213 225; /* slate-300 */
-  --color-muted: 248 250 252; /* slate-50 */
-  --color-success: 34 197 94; /* green-500 */
-  --color-warning: 245 158 11; /* amber-500 */
-  --color-error: 239 68 68; /* red-500 */
-  --color-info: 59 130 246; /* blue-500 */
+ :root {
+  --color-theme-primary: 15 118 110; /* teal-700 */
+  --color-theme-background: 254 254 254;
+  --color-theme-surface: 241 245 249; /* slate-100 */
+  --color-theme-text-primary: 30 41 59; /* slate-800 */
+  --color-theme-text-secondary: 100 116 139; /* slate-500 */
+  --color-theme-text-button: 0 0 0;
+  --color-theme-accent: 6 182 212; /* cyan-500 */
+  --color-theme-border: 203 213 225; /* slate-300 */
+  --color-theme-muted: 248 250 252; /* slate-50 */
+  --color-theme-success: 16 185 129; /* emerald-500 */
+  --color-theme-warning: 245 158 11; /* amber-500 */
+  --color-theme-error: 239 68 68; /* red-500 */
+  --color-theme-info: 59 130 246; /* blue-500 */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Dark Mode - Midnight Teal */
-    --color-primary: 45 212 191; /* teal-400 */
-    --color-background: 2 6 23; /* slate-950 */
-    --color-surface: 15 23 42; /* slate-900 */
-    --color-text-primary: 255 255 255;
-    --color-text-secondary: 226 232 240; /* slate-200 */
-    --color-accent: 34 211 238; /* cyan-400 */
-    --color-border: 71 85 105; /* slate-600 */
-    --color-muted: 30 41 59; /* slate-800 */
-    --color-success: 74 222 128; /* green-400 */
-    --color-warning: 251 191 36; /* amber-400 */
-    --color-error: 248 113 113; /* red-400 */
-    --color-info: 96 165 250; /* blue-400 */
-  }
+ :root.dark {
+  --color-theme-primary: 45 212 191; /* teal-400 */
+  --color-theme-background: 2 6 23; /* slate-950 */
+  --color-theme-surface: 15 23 42; /* slate-900 */
+  --color-theme-text-primary: 255 255 255;
+  --color-theme-text-secondary: 226 232 240; /* slate-200 */
+  --color-theme-text-button: 255 255 255;
+  --color-theme-accent: 34 211 238; /* cyan-400 */
+  --color-theme-border: 71 85 105; /* slate-600 */
+  --color-theme-muted: 30 41 59; /* slate-800 */
+  --color-theme-success: 5 150 105; /* teal-600 */
+  --color-theme-warning: 251 191 36; /* amber-400 */
+  --color-theme-error: 248 113 113; /* red-400 */
+  --color-theme-info: 96 165 250; /* blue-400 */
 }
 
-/* Manual theme toggle classes */
-.light-theme {
-  /* Light Mode - Professional Teal */
-  --color-primary: 15 118 110;
-  --color-background: 254 254 254;
-  --color-surface: 241 245 249;
-  --color-text-primary: 30 41 59;
-  --color-text-secondary: 100 116 139;
-  --color-accent: 6 182 212;
-  --color-border: 203 213 225;
-  --color-muted: 248 250 252;
-  --color-success: 34 197 94;
-  --color-warning: 245 158 11;
-  --color-error: 239 68 68;
-  --color-info: 59 130 246;
-}
-
-.dark-theme {
-  /* Dark Mode - Midnight Teal */
-  --color-primary: 45 212 191;
-  --color-background: 2 6 23;
-  --color-surface: 15 23 42;
-  --color-text-primary: 255 255 255;
-  --color-text-secondary: 226 232 240;
-  --color-accent: 34 211 238;
-  --color-border: 71 85 105;
-  --color-muted: 30 41 59;
-  --color-success: 74 222 128;
-  --color-warning: 251 191 36;
-  --color-error: 248 113 113;
-  --color-info: 96 165 250;
-}
+/* Manual theme toggle classes removed; use `.dark` class instead */
 
 /* Base styles */
 body {
-  background-color: rgb(var(--color-background));
-  color: rgb(var(--color-text-primary));
+  background-color: rgb(var(--color-theme-background));
+  color: rgb(var(--color-theme-text-primary));
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 /* Focus styles for accessibility */
 *:focus-visible {
-  outline: 2px solid rgb(var(--color-primary));
+  outline: 2px solid rgb(var(--color-theme-primary));
   outline-offset: 2px;
 }
 
@@ -90,29 +56,3 @@ body {
               border-color 0.2s ease-in-out, 
               color 0.2s ease-in-out;
 }
-
-/* Custom utility classes for use with Tailwind */
-.bg-theme-primary { background-color: rgb(var(--color-primary)); }
-.bg-theme-background { background-color: rgb(var(--color-background)); }
-.bg-theme-surface { background-color: rgb(var(--color-surface)); }
-.bg-theme-muted { background-color: rgb(var(--color-muted)); }
-
-.text-theme-primary { color: rgb(var(--color-text-primary)); }
-.text-theme-secondary { color: rgb(var(--color-text-secondary)); }
-.text-theme-accent { color: rgb(var(--color-accent)); }
-
-.border-theme-border { border-color: rgb(var(--color-border)); }
-.border-theme-primary { border-color: rgb(var(--color-primary)); }
-
-.ring-theme-primary { --tw-ring-color: rgb(var(--color-primary)); }
-
-/* Status colors */
-.text-theme-success { color: rgb(var(--color-success)); }
-.text-theme-warning { color: rgb(var(--color-warning)); }
-.text-theme-error { color: rgb(var(--color-error)); }
-.text-theme-info { color: rgb(var(--color-info)); }
-
-.bg-theme-success { background-color: rgb(var(--color-success)); }
-.bg-theme-warning { background-color: rgb(var(--color-warning)); }
-.bg-theme-error { background-color: rgb(var(--color-error)); }
-.bg-theme-info { background-color: rgb(var(--color-info)); }

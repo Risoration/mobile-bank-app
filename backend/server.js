@@ -1,4 +1,4 @@
-import express, { response } from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
@@ -74,6 +74,19 @@ app.post('/api/exchange_public_token', async (req, res) => {
   }
 });
 
+// verify whether a user has an access token stored (does not return the token)
+app.get('/api/users/:userId/has_access_token', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const userDoc = await User.findById(userId).select('accessToken');
+    const hasAccessToken = Boolean(userDoc?.accessToken);
+    res.json({ hasAccessToken });
+  } catch (error) {
+    console.error('Check access token error:', error.message);
+    res.status(500).json({ error: 'Failed to check access token' });
+  }
+});
+
 // Connect to database and then start server
 const startServer = async () => {
   try {
@@ -131,6 +144,58 @@ app.get('/api/transactions/:userId', async (req, res) => {
       'Plaid transactions error:',
       error.response?.data || error.message
     );
+    res.status(500).json({ error: error.response?.data || error.message });
+  }
+});
+
+// Plaid transactions sync endpoint to fetch incremental updates
+app.get('/api/transactions/sync/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { accountId, count } = req.query;
+
+    const userDoc = await User.findById(userId).select(
+      'accessToken plaidCursor'
+    );
+    const accessToken = userDoc?.accessToken;
+    let cursor = userDoc?.plaidCursor || null;
+
+    if (!accessToken) {
+      return res.status(400).json({ error: 'Missing access token for user' });
+    }
+
+    const added = [];
+    const modified = [];
+    const removed = [];
+    let hasMore = true;
+
+    while (hasMore) {
+      const request = {
+        access_token: accessToken,
+        cursor: cursor || undefined,
+        count: count ? Number(count) : undefined,
+        options: accountId ? { account_ids: [accountId] } : undefined,
+      };
+
+      const response = await client.transactionsSync(request);
+      const data = response.data;
+      added.push(...(data.added || []));
+      modified.push(...(data.modified || []));
+      removed.push(...(data.removed || []));
+      hasMore = data.has_more;
+      cursor = data.next_cursor;
+    }
+
+    // persist next cursor
+    await User.findByIdAndUpdate(
+      userId,
+      { plaidCursor: cursor },
+      { new: true }
+    );
+
+    res.json({ added, modified, removed, next_cursor: cursor });
+  } catch (error) {
+    console.error('Plaid sync error:', error.response?.data || error.message);
     res.status(500).json({ error: error.response?.data || error.message });
   }
 });

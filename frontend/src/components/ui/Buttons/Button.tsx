@@ -50,20 +50,29 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseClasses =
-      'flex justify-between text-center items-center font-medium cursor-pointer rounded-md transition-colors h-fit m-2';
+      'flex justify-between rounded text-center items-center font-medium cursor-pointer transition-colors h-fit m-2';
 
     const variants = {
-      primary: ' border border-blue-600',
-      secondary: 'text-gray-300 border border-gray-600',
+      primary:
+        'bg-[rgb(var(--color-theme-primary))] hover:bg-[rgb(var(--color-theme-primary)/0.9)] text-[color:rgb(var(--color-theme-text-button))] border border-[rgb(var(--color-theme-border))]',
+      secondary:
+        'bg-[rgb(var(--color-theme-surface))] hover:bg-[rgb(var(--color-theme-muted))] text-[color:rgb(var(--color-theme-text-button))] border border-[rgb(var(--color-theme-border))]',
       success:
-        ' border rounded-md hover:bg-teal-700 dark:hover:bg-slate-200 dark:hover:text-slate-950',
-      danger: ' border border-red-600 hover:bg-red-700',
-      aside: `text-slate-200 border w-full bg-teal-900 hover:bg-teal-700 text-slate-900 dark:bg-teal-500 dark:hover-teal-400 dark:text-slate-200`,
-      submit: 'text-teal-500 bg-white hover:bg-teal-500 hover: justify-center',
+        'bg-[rgb(var(--color-theme-success))] hover:bg-[rgb(var(--color-theme-success)/0.9)] text-[color:rgb(var(--color-theme-text-button))] border border-[rgb(var(--color-theme-border))] rounded-md',
+      danger:
+        'bg-[rgb(var(--color-theme-error))] hover:bg-[rgb(var(--color-theme-error)/0.9)] text-[color:rgb(var(--color-theme-text-button))] border border-[rgb(var(--color-theme-border))]',
+      submit:
+        'text-[color:rgb(var(--color-theme-text-button))] bg-white hover:bg-[rgb(var(--color-theme-muted))] justify-center border border-[rgb(var(--color-theme-border))]',
       register:
-        ' border border-teal bg-teal-500 hover:bg-white hover:text-teal-500 justify-center',
-      addbank: ' hover:text-teal-800 bg-teal-500 hover:bg-teal-400',
-      premium: ' hover:bg-yellow-700 bg-yellow-600/40',
+        'border border-[rgb(var(--color-theme-border))] bg-[rgb(var(--color-theme-primary))] hover:bg-white hover:text-[color:rgb(var(--color-theme-primary))] justify-center text-[color:rgb(var(--color-theme-text-button))]',
+      addbank:
+        'text-[color:rgb(var(--color-theme-text-button))] bg-[rgb(var(--color-theme-accent))] hover:bg-[rgb(var(--color-theme-accent)/0.9)]',
+      premium:
+        'bg-yellow-600/40 hover:bg-yellow-700 text-[color:rgb(var(--color-theme-text-button))] border border-[rgb(var(--color-theme-border))]',
+      muted:
+        'border border-[rgb(var(--color-theme-border))] bg-[rgb(var(--color-theme-muted))] text-[color:rgb(var(--color-theme-text-button))] hover:bg-[rgb(var(--color-theme-muted)/0.9)]',
+      aside:
+        'w-full border border-[rgb(var(--color-theme-border))] bg-[rgb(var(--color-theme-muted))] hover:bg-[rgb(var(--color-theme-primary)/0.9)] text-[rgb(var(--color-theme-text-button))]',
     };
 
     const sizes = {

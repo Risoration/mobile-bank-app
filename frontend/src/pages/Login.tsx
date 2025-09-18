@@ -3,11 +3,8 @@ import { useState, useContext } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { UserContext } from '../../context/userContext';
-import Button from '../components/ui/Buttons/Button';
 import '../index.css';
-import PasswordInput from '../components/ui/password-input';
 import Input from '../components/ui/Input';
-import { email } from 'zod';
 import React from 'react';
 
 const Login = ({ switchToRegister, setModalOpen }) => {

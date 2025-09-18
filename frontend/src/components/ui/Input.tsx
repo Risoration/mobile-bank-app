@@ -8,17 +8,17 @@ const Input: React.FC<InputProps> = ({ label, className = '', ...props }) => {
   return (
     <div className='flex flex-col w-full'>
       {label && (
-        <label className='mb-1 text-sm font-medium text-gray-700 dark:text-gray-300'>
+        <label className='mb-1 text-sm font-medium text-[color:rgb(var(--color-theme-text-secondary))]'>
           {label}
         </label>
       )}
       <input
         {...props}
         className={`
-          w-full px-3 py-2 border border-gray-300 rounded-md text-sm
-          focus:outline-none focus:ring-2 focus:ring-blue-500
-          bg-white text-gray-900 placeholder-gray-500
-          dark:bg-gray-900 dark:text-white dark:placeholder-gray-400
+          w-full px-3 py-2 border rounded-md text-sm
+          focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-theme-primary))]
+          bg-[rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))] placeholder-[color:rgb(var(--color-theme-text-secondary))]
+          border-[rgb(var(--color-theme-border))]
           ${className}
         `}
       />

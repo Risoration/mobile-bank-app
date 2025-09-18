@@ -30,7 +30,7 @@ export default function Sidebar({ onViewChange }) {
   return (
     <aside
       className='w-55 shadow-md p-4 flex flex-col items-center rounded-2xl h-screen mr-5
-                 bg-gray-100 text-gray-900 dark:bg-slate-900 dark:text-white'
+                 bg-[rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'
     >
       <nav className='flex flex-col w-full'>
         {navigation.map((item) => {
@@ -39,8 +39,8 @@ export default function Sidebar({ onViewChange }) {
           return (
             <Button
               key={item.id}
-              variant='aside'
-              className='text-center'
+              variant={'aside'}
+              className='px-4 py-2 rounded'
               onClick={() => onViewChange(item.id)}
             >
               <Icon className='w-5 h-5' />

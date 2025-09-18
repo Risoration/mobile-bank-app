@@ -25,7 +25,7 @@ const App: React.FC = () => {
     <UserContextProvider>
       <SettingsProvider>
         <ThemeProvider>
-          <div className='bg-slate-50 dark:bg-slate-950 max-h-screen overflow-y-auto'>
+          <div className='bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))] max-h-screen overflow-y-auto'>
             <Navbar
               openLogin={() => {
                 setModalView('login');

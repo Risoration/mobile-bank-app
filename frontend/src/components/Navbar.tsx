@@ -33,20 +33,19 @@ const Navbar = ({ openLogin }) => {
   return (
     <div
       className='h-[50px] flex items-center justify-between flex-col sm:flex-row 
-      bg-slate-50  text-slate-200 
-      dark:bg-slate-950 dark:text-white 
-      '
+      bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))]'
     >
       {/* Logo */}
       <div
         className='
           px-10 text-[25px] font-extrabold uppercase text-center cursor-pointer
-          text-gray-900 hover:text-teal-600
-          dark:text-gray-50 dark:hover:text-teal-400
+          text-[color:rgb(var(--color-theme-text-primary))] hover:text-[color:rgb(var(--color-theme-accent))]/70
         '
         onClick={user ? () => navigate('/main') : () => navigate('/home')}
       >
-        <h2 className='text-gray-900 dark:text-white'>Revolve</h2>
+        <h2 className='text-[color:rgb(var(--color-theme-text-primary))]'>
+          Revolve
+        </h2>
       </div>
 
       {/* Right side */}
@@ -62,10 +61,10 @@ const Navbar = ({ openLogin }) => {
 
         {user && (
           <>
-            <h1 className='flex w-fit text-lg items-center font-bold'>
+            <h1 className='text-[color:rgb(var(--color-theme-text-primary))] flex w-fit text-lg items-center font-bold'>
               {user?.firstname + ' ' + user?.lastname || 'User'}
             </h1>
-            <div className='form-check form-switch !bg-green'>
+            <div className='form-check form-switch'>
               <input
                 className='form-check-input'
                 type='checkbox'
@@ -81,10 +80,10 @@ const Navbar = ({ openLogin }) => {
               <label className='form-check-label' htmlFor='checkDarkMode' />
             </div>
             <div className='flex flex-row ml-5 gap-2'>
-              <Button variant='success' onClick={() => navigate('/main')}>
+              <Button variant='secondary' onClick={() => navigate('/main')}>
                 My Dashboard
               </Button>
-              <Button variant='danger' onClick={logout}>
+              <Button variant='secondary' onClick={logout}>
                 Sign Out
               </Button>
             </div>

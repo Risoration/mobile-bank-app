@@ -1,7 +1,3 @@
-import Button from '../components/ui/Buttons/Button';
-import { ArrowDownCircle, CreditCard, SettingsIcon, Crown } from 'lucide-react';
-import '../index.css';
-import { ChartNoAxesCombined } from 'lucide-react';
 import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../context/userContext';
 import Dashboard from '../components/Dashboard';
@@ -11,17 +7,15 @@ import Settings from '../components/Settings';
 import axios from 'axios';
 import Sidebar from '../components/Sidebar';
 import React from 'react';
-import { useTheme } from '../../context/themeContext';
 
 export default function MainPage() {
   const { user } = useContext(UserContext);
-  const { darkMode } = useTheme();
   const [accounts, setAccounts] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
   const [pageView, setPageView] = useState('dashboard');
-  const [startDate, setStartDate] = useState('2024-01-01');
-  const [endDate, setEndDate] = useState('2024-12-31');
+  const [startDate, setStartDate] = useState('2025-01-01');
+  const [endDate, setEndDate] = useState('2025-12-31');
 
   useEffect(() => {
     if (!user) return;
@@ -48,17 +42,16 @@ export default function MainPage() {
 
   return (
     <div
-      className={`h-full font-thin bg-gray-100 text-gray-900 
-                 dark:bg-slate-950 dark:text-gray-100`}
+      className={`h-full font-thin bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))]`}
     >
-      <div className='flex justify-between m-3 h-fit bg-gray-100 dark:bg-slate-950'>
+      <div className='flex justify-between m-3 h-fit bg-[rgb(var(--color-theme-background))]'>
         {/* Sidebar */}
         <Sidebar onViewChange={setPageView} />
 
         {/* Main Content */}
         <main
           className={
-            'flex-1 p-6 overflow-y-auto rounded-2xl bg-slate text-gray-900 dark:bg-teal-900 dark:text-gray-100 mb-2'
+            'flex-1 p-6 overflow-y-auto rounded-2xl bg-[rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))] mb-2'
           }
         >
           {pageView === 'dashboard' && (

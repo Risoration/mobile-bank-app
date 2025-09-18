@@ -76,10 +76,9 @@ const Register: React.FC<RegisterProps> = ({ switchToLogin }) => {
     <div className='h-screen flex items-center justify-center px-4'>
       <form
         onSubmit={registerUser}
-        className='w-full max-w-md bg-white dark:bg-gray-900 
-                   p-8 rounded-lg shadow-md'
+        className='w-full max-w-md bg-[rgb(var(--color-theme-surface))] p-8 rounded-lg shadow-md'
       >
-        <h1 className='mb-6 text-3xl font-bold text-gray-900 dark:text-white text-center'>
+        <h1 className='mb-6 text-3xl font-bold text-[color:rgb(var(--color-theme-text-primary))] text-center'>
           Register
         </h1>
 
@@ -133,11 +132,11 @@ const Register: React.FC<RegisterProps> = ({ switchToLogin }) => {
           </Button>
         </div>
 
-        <p className='mt-6 text-center text-sm text-gray-600 dark:text-gray-400'>
+        <p className='mt-6 text-center text-sm text-[color:rgb(var(--color-theme-text-secondary))]'>
           Already a member?{' '}
           <button
             type='button'
-            className='text-teal-600 dark:text-purple-400 hover:underline'
+            className='text-[color:rgb(var(--color-theme-primary))] hover:underline'
             onClick={switchToLogin}
           >
             Log in here
