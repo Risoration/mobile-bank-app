@@ -30,6 +30,7 @@ export default function MainPage() {
           { params: { start_date: startDate, end_date: endDate } }
         );
         setTransactions(transData.transactions ?? transData.response ?? []);
+        console.log('Fetched transactions:', transactions);
       } catch (err) {
         console.error('Failed to fetch accounts/transactions', err);
         setAccounts([]);
@@ -55,7 +56,10 @@ export default function MainPage() {
           }
         >
           {pageView === 'dashboard' && (
-            <Dashboard accounts={accounts} transactions={transactions} />
+            <Dashboard
+              accounts={accounts}
+              transactions={transactions}
+            />
           )}
           {pageView === 'accounts' && <Accounts accounts={accounts} />}
           {pageView === 'transactions' && (

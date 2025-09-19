@@ -78,9 +78,11 @@ const Register: React.FC<RegisterProps> = ({ switchToLogin }) => {
         onSubmit={registerUser}
         className='w-full max-w-md bg-[rgb(var(--color-theme-surface))] p-8 rounded-lg shadow-md'
       >
-        <h1 className='mb-6 text-3xl font-bold text-[color:rgb(var(--color-theme-text-primary))] text-center'>
-          Register
-        </h1>
+        <span className='flex flex-col mb-6'>
+          <h1 className='text-3xl font-bold text-[color:rgb(var(--color-theme-text-primary))]'>
+            Register
+          </h1>
+        </span>
 
         <div className='flex flex-col gap-4'>
           <Input
@@ -114,7 +116,11 @@ const Register: React.FC<RegisterProps> = ({ switchToLogin }) => {
           />
 
           <div className='flex flex-col w-full'>
-            <PasswordStrengthMeter value={strength} p='p-2' w='w-full' />
+            <PasswordStrengthMeter
+              value={strength}
+              p='p-2'
+              w='w-full'
+            />
           </div>
 
           <Input
@@ -127,7 +133,12 @@ const Register: React.FC<RegisterProps> = ({ switchToLogin }) => {
             }
           />
 
-          <Button type='submit' variant='register' size='lg' className='w-full'>
+          <Button
+            type='submit'
+            variant='register'
+            size='md'
+            className='w-full'
+          >
             Register
           </Button>
         </div>

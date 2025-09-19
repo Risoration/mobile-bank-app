@@ -6,6 +6,7 @@ import { UserContext } from '../../context/userContext';
 import '../index.css';
 import Input from '../components/ui/Input';
 import React from 'react';
+import Button from '../components/ui/Buttons/Button';
 
 const Login = ({ switchToRegister, setModalOpen }) => {
   const [data, setData] = useState({
@@ -56,9 +57,15 @@ const Login = ({ switchToRegister, setModalOpen }) => {
 
   return (
     <div className='h-screen flex items-center justify-center'>
-      <form onSubmit={loginUser}>
-        <div className='flex flex-col justify-center bg-white text-gray-700 dark:bg-[#4d4949] dark:text-white p-12 rounded-md h-full'>
-          <h1 className='mb-6 text-md font-sans text-black'>Login</h1>
+      <form
+        onSubmit={loginUser}
+        className='max-w-md bg-[rgb(var(--color-theme-surface))] rounded-lg shadow-md'
+      >
+        <div className='flex flex-col justify-center text-[color:rgb(var(--color-theme-text-primary))] p-12 rounded-md h-full'>
+          <span className='flex flex-col mb-6'>
+            <h1 className='mb-6 text-md font-sans'>Login</h1>
+          </span>
+
           <div className='flex flex-col gap-4 items-center max-w-sm justify-center'>
             <Input
               label='Email'
@@ -74,21 +81,24 @@ const Login = ({ switchToRegister, setModalOpen }) => {
               value={data.password}
               onChange={(e) => setData({ ...data, password: e.target.value })}
             />
-            <button
+            <Button
               type='submit'
-              className='w-full px-4 py-2 rounded-md bg-teal-500 text-white hover:bg-teal-600 font-bold'
+              variant='register'
+              size='md'
+              className='w-full'
             >
-              Login
-            </button>
+              Log In
+            </Button>
           </div>
-          <p className='text-white/50 self-center'>
-            Not a Member?
-            <a
-              className='cursor-pointer hover:text-teal-400 transition-colors duration-100 underline'
+          <p className='mt-6 text-center text-sm text-[color:rgb(var(--color-theme-text-secondary))]'>
+            Not a Member?{' '}
+            <button
+              type='button'
+              className='text-[color:rgb(var(--color-theme-primary))] hover:underline'
               onClick={switchToRegister}
             >
-              Sign up now
-            </a>
+              Sign up Now
+            </button>
           </p>
         </div>
       </form>
