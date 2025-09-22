@@ -7,6 +7,7 @@ import Settings from '../components/Settings';
 import axios from 'axios';
 import Sidebar from '../components/Sidebar';
 import React from 'react';
+import Budgets from '../components/Budgets';
 
 export default function MainPage() {
   const { user } = useContext(UserContext);
@@ -73,6 +74,7 @@ export default function MainPage() {
               }}
             />
           )}
+          {pageView === 'budgets' && <Budgets />}
           {pageView === 'settings' && <Settings />}
         </main>
       </div>

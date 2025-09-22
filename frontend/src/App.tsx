@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { UserContextProvider } from '../context/userContext';
 import { SettingsProvider } from '../context/settingsContext';
-import { ThemeProvider, useTheme } from '../context/themeContext';
+import { ThemeProvider } from '../context/themeContext';
 import MainPage from './pages/MainPage';
 import './index.css';
 import Modal from './components/Modal';
@@ -39,12 +39,24 @@ const App: React.FC = () => {
             />
 
             <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/home' element={<Home />} />
-              <Route path='/main' element={<MainPage />} />
+              <Route
+                path='/'
+                element={<Home />}
+              />
+              <Route
+                path='/home'
+                element={<Home />}
+              />
+              <Route
+                path='/main'
+                element={<MainPage />}
+              />
             </Routes>
 
-            <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+            <Modal
+              isOpen={modalOpen}
+              onClose={() => setModalOpen(false)}
+            >
               {modalView === 'login' && (
                 <Login
                   switchToRegister={() => setModalView('register')}

@@ -7,6 +7,7 @@ import '../index.css';
 import Input from '../components/ui/Input';
 import React from 'react';
 import Button from '../components/ui/Buttons/Button';
+import PasswordInput from '../components/ui/password-input';
 
 const Login = ({ switchToRegister, setModalOpen }) => {
   const [data, setData] = useState({
@@ -74,8 +75,7 @@ const Login = ({ switchToRegister, setModalOpen }) => {
               value={data.email}
               onChange={(e) => setData({ ...data, email: e.target.value })}
             />
-            <Input
-              label='Password'
+            <PasswordInput
               type='password'
               placeholder='Enter your Password'
               value={data.password}

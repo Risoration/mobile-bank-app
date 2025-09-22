@@ -2,8 +2,10 @@ import Button from './Button';
 import React, { useContext } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 import { useState, useEffect } from 'react';
-import { UserContext } from '../../../../context/userContext';
-import { UserContextType } from '../../../../context/userContext';
+import {
+  UserContext,
+  type UserContextType,
+} from '../../../../context/userContext';
 
 export default function ConnectBankButton() {
   const { user } = useContext(UserContext) as UserContextType;
@@ -41,7 +43,11 @@ export default function ConnectBankButton() {
   });
 
   return (
-    <Button onClick={() => open()} disabled={!ready} variant='addbank'>
+    <Button
+      onClick={() => open()}
+      disabled={!ready}
+      variant='addbank'
+    >
       + Add Bank Account
     </Button>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Input from './Input';
+import Input from './Input.jsx';
 /**
  * PasswordInput Component - A password input field with visibility toggle
  *
@@ -50,7 +50,7 @@ export const PasswordInput = React.forwardRef<
     const [visible, setVisible] = useState(false);
 
     const toggleVisibility = () => {
-      setVisible(!visible);
+      setVisible((prev) => !prev);
     };
 
     return (
@@ -58,7 +58,7 @@ export const PasswordInput = React.forwardRef<
         <Input
           label='Password'
           placeholder={placeholder}
-          type='password'
+          type={visible ? 'text' : type}
           onChange={onChange}
           className={className}
           disabled={disabled}
@@ -67,7 +67,7 @@ export const PasswordInput = React.forwardRef<
           type='button'
           disabled={disabled}
           onClick={toggleVisibility}
-          className='absolute cursor-pointer right-2 top-1/2 transform -translate-y-1/2 p-1 text-white hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded'
+          className='absolute cursor-pointer right-2 top-1/2 transform text-white hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded'
           aria-label='Toggle password visibility'
         >
           {visible ? (
@@ -86,7 +86,7 @@ export const PasswordInput = React.forwardRef<
             </svg>
           ) : (
             <svg
-              className='w-5 h-5 hover:text-purple-400'
+              className='w-5 h-5 hover:text-cyan-400'
               fill='none'
               stroke='currentColor'
               viewBox='0 0 24 24'
@@ -121,7 +121,11 @@ export const PasswordInput = React.forwardRef<
  * @example
  * <PasswordStrengthMeter value={3} p="p-2" w="w-full" />
  */
-export const PasswordStrengthMeter = ({ value, p = '', w = '' }) => {
+export const PasswordStrengthMeter: React.FC<PasswordStrengthMeterProps> = ({
+  value,
+  p = '',
+  w = '',
+}) => {
   const getStrengthColor = (strength: number) => {
     if (strength <= 1) return 'bg-red-500';
     if (strength <= 2) return 'bg-orange-500';

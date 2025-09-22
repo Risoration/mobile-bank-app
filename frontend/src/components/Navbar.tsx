@@ -51,7 +51,10 @@ const Navbar = ({ openLogin }) => {
       {/* Right side */}
       <div className='flex items-center gap-4 text-center'>
         {!user && (
-          <Button variant='success' onClick={openLogin}>
+          <Button
+            variant='success'
+            onClick={openLogin}
+          >
             <div className='mr-2'>
               <LogIn />
             </div>
@@ -77,13 +80,22 @@ const Navbar = ({ openLogin }) => {
               ) : (
                 <Sun className='w-5 h-5' />
               )}
-              <label className='form-check-label' htmlFor='checkDarkMode' />
+              <label
+                className='form-check-label'
+                htmlFor='checkDarkMode'
+              />
             </div>
             <div className='flex flex-row ml-5 gap-2'>
-              <Button variant='secondary' onClick={() => navigate('/main')}>
+              <Button
+                variant='secondary'
+                onClick={() => navigate('/main')}
+              >
                 My Dashboard
               </Button>
-              <Button variant='secondary' onClick={logout}>
+              <Button
+                variant='secondary'
+                onClick={logout}
+              >
                 Sign Out
               </Button>
             </div>

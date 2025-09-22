@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { Card, CardContent } from './ui/Card';
-import { User, UserContext } from '../../context/userContext';
+import { UserContext } from '../../context/userContext';
 import ConnectBankButton from './ui/Buttons/ConnectBankButton';
 import React from 'react';
-import Button from './ui/Buttons/Button';
-import { Coins } from 'lucide-react';
 
 export default function Dashboard({ accounts, transactions }) {
   const { user } = useContext(UserContext);

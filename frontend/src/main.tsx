@@ -5,7 +5,6 @@ import App from './App';
 // Import Bootstrap and CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
-import * as bootstrap from 'bootstrap';
 import { ThemeProvider } from '../context/themeContext';
 
 const rootElement = document.getElementById('root');

@@ -2,6 +2,12 @@ import axios from 'axios';
 import React from 'react';
 import { createContext, useState, useEffect } from 'react';
 
+export type UserContextType = {
+  user: User | null;
+  setUser: (user: User | null) => void;
+  loading: boolean;
+};
+
 export const UserContext = createContext<UserContextType>({
   user: null,
   setUser: () => {},
@@ -14,12 +20,6 @@ export type User = {
   firstname: string;
   lastname: string;
   subscriptionTier: 'free' | 'premium';
-};
-
-export type UserContextType = {
-  user: User | null;
-  setUser: (user: User | null) => void;
-  loading: boolean;
 };
 
 export function UserContextProvider({

@@ -157,34 +157,38 @@ export default function Transactions({
       </h1>
 
       <div>
-        <div className='flex flex-col items-start justify-between gap-3'>
-          <div className='flex items-center justfy-between gap-2'>
-            <label className='text-sm text-[color:rgb(var(--color-theme-text-secondary))]'>
-              Start Date
-            </label>
-            <input
-              type='date'
-              value={startDate}
-              onChange={(e) =>
-                onChangeDateRange?.(e.target.value, endDate || '')
-              }
-              className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/20'
-            />
+        <div className='flex flex-row items-start justify-between gap-3'>
+          <div className='mb-4 flex flex-col items-center gap-3'>
+            {' '}
+            <div className='flex items-center justfy-between gap-2'>
+              <label className='text-sm text-[color:rgb(var(--color-theme-text-secondary))]'>
+                Start Date
+              </label>
+              <input
+                type='date'
+                value={startDate}
+                onChange={(e) =>
+                  onChangeDateRange?.(e.target.value, endDate || '')
+                }
+                className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/20'
+              />
+            </div>
+            <div className='flex items-center gap-2'>
+              <label className='text-sm text-[color:rgb(var(--cololr-theme-text-secondary))] mr-1.5'>
+                End Date
+              </label>
+              <input
+                type='date'
+                value={endDate}
+                onChange={(e) =>
+                  onChangeDateRange?.(startDate || '', e.target.value)
+                }
+                className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/20 text-[color:rgb(var(--color-theme-text-primary))]'
+              />
+            </div>
           </div>
-          <div className='flex items-center gap-2'>
-            <label className='text-sm text-[color:rgb(var(--cololr-theme-text-secondary))] mr-1.5'>
-              End Date
-            </label>
-            <input
-              type='date'
-              value={endDate}
-              onChange={(e) =>
-                onChangeDateRange?.(startDate || '', e.target.value)
-              }
-              className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/20 text-[color:rgb(var(--color-theme-text-primary))]'
-            />
-          </div>
-          <div className='flex flex-wrap items-center gap-3'>
+
+          <div className='flex flex-col items-end gap-3'>
             <div className='flex items-center gap-2'>
               <label className='text-sm text-[color:rgb(var(--color-theme-text-secondary))]'>
                 Sort
@@ -192,12 +196,12 @@ export default function Transactions({
               <select
                 value={sortKey}
                 onChange={(e) => setSortKey(e.target.value as SortKey)}
-                className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/20'
+                className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 text-end focus:ring-white/20'
               >
-                <option value='date_desc'>Date (newest)</option>
-                <option value='date_asc'>Date (oldest)</option>
-                <option value='amount_desc'>Amount (high → low)</option>
-                <option value='amount_asc'>Amount (low → high)</option>
+                <option value='date_desc'>Date (Newest)</option>
+                <option value='date_asc'>Date (Oldest)</option>
+                <option value='amount_desc'>Amount (High to Low)</option>
+                <option value='amount_asc'>Amount (Low to High)</option>
               </select>
             </div>
 
@@ -208,7 +212,7 @@ export default function Transactions({
               <select
                 value={accountFilter}
                 onChange={(e) => setAccountFilter(e.target.value)}
-                className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/20'
+                className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none text-end focus:ring-2 focus:ring-white/20'
               >
                 {accountOptions.map((opt) => (
                   <option
@@ -228,7 +232,7 @@ export default function Transactions({
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/20'
+                className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none text-end focus:ring-2 focus:ring-white/20'
               >
                 {categoryOptions.map((opt) => (
                   <option
@@ -241,14 +245,14 @@ export default function Transactions({
               </select>
             </div>
           </div>
-          <Button
-            onClick={clearAllFilters}
-            variant='secondary'
-            className='text-[color:rgb(var(--color-theme-text-secondary))]'
-          >
-            Clear Filters
-          </Button>
         </div>
+        <Button
+          onClick={clearAllFilters}
+          variant='secondary'
+          className='text-[color:rgb(var(--color-theme-text-secondary))]'
+        >
+          Clear Filters
+        </Button>
       </div>
 
       <div className='mb-6 flex flex-col '></div>

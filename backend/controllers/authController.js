@@ -1,12 +1,10 @@
 import UserModel from '../models/user.js';
 import { hashPassword, comparePasswords } from '../helpers/auth.js';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 
 export const test = async (req, res) => {
   res.json('test is working');
 };
-
 //register endpoint
 export const registerUser = async (req, res) => {
   try {

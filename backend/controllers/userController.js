@@ -78,3 +78,16 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
+
+// Check if user has access token
+export const hasAccessToken = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const userDoc = await User.findById(userId).select('accessToken');
+    const hasAccessToken = Boolean(userDoc?.accessToken);
+    res.json({ hasAccessToken });
+  } catch (error) {
+    console.error('Check access token error:', error.message);
+    res.status(500).json({ error: 'Failed to check access token' });
+  }
+};
