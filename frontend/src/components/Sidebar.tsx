@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Building2,
   PieChart,
@@ -7,11 +7,10 @@ import {
   ArrowLeftCircle,
   Building,
 } from 'lucide-react';
-import type { User } from '../../../shared/user';
 import Button from './ui/Buttons/Button';
+import { UserContext } from '../../context/userContext';
 
 interface SidebarProps {
-  user: User;
   activeView: string;
   onViewChange: (view: string) => void;
   onUpgrade: () => void;
@@ -27,6 +26,7 @@ const navigation = [
 ];
 
 export default function Sidebar({ onViewChange }) {
+  const { user } = useContext(UserContext);
   return (
     <aside
       className='w-55 shadow-md p-4 flex flex-col items-center rounded-2xl h-screen mr-5
@@ -35,17 +35,31 @@ export default function Sidebar({ onViewChange }) {
       <nav className='flex flex-col w-full'>
         {navigation.map((item) => {
           const Icon = item.icon;
+          const isDisabled = item.premium && user?.subscriptionTier === 'free';
 
           return (
-            <Button
+            <div
               key={item.id}
-              variant={'aside'}
-              className='px-4 py-2 rounded'
-              onClick={() => onViewChange(item.id)}
+              className='relative group'
             >
-              <Icon className='w-5 h-5' />
-              <span>{item.label}</span>
-            </Button>
+              <span
+                className='d-inline-block w-full'
+                data-toggle='tooltip'
+                title='Updade to Revolve Premium to access this feature'
+              >
+                <Button
+                  variant={item.premium ? 'premium' : 'aside'}
+                  className={`px-4 py-2 rounded ${
+                    isDisabled ? 'pointer-events-none' : ''
+                  }`}
+                  onClick={() => onViewChange(item.id)}
+                  disabled={isDisabled}
+                >
+                  <Icon className='w-5 h-5' />
+                  <span>{item.label}</span>
+                </Button>
+              </span>
+            </div>
           );
         })}
       </nav>

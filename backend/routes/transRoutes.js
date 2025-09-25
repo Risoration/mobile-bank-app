@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 
 import {
-  getTransactions,
+  getUserTransactions,
   syncTransactions,
 } from '../controllers/transController.js';
 
@@ -20,7 +20,7 @@ router.options(
   cors({ credentials: true, origin: 'http://localhost:5173' })
 );
 
-router.get('/:userId', getTransactions);
+router.get('/:userId', getUserTransactions);
 
 router.get('/sync/:userId', syncTransactions);
 

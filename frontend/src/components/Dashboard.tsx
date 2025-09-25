@@ -1,12 +1,23 @@
-import { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Card, CardContent } from './ui/Card';
 import { UserContext } from '../../context/userContext';
 import ConnectBankButton from './ui/Buttons/ConnectBankButton';
-import React from 'react';
+import { Transaction } from '../../../shared/user';
+import { SettingsContext } from '../../context/settingsContext';
 
 export default function Dashboard({ accounts, transactions }) {
   const { user } = useContext(UserContext);
-  const formatCurrency = (amount, currency = 'GBP') => {
+  const [selectedAccountId, setSelectedAccountId] = useState<string | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (accounts?.length > 0 && !selectedAccountId) {
+      setSelectedAccountId(null); // default to first account
+    }
+  }, [accounts, selectedAccountId]);
+
+  const formatCurrency = (amount: number, currency = 'GBP') => {
     if (amount == null) return '-';
     try {
       return new Intl.NumberFormat(undefined, {
@@ -19,16 +30,19 @@ export default function Dashboard({ accounts, transactions }) {
     }
   };
 
+  const filteredTransactions = (transactions || []).filter(
+    (tx) => !selectedAccountId || tx.account_id === selectedAccountId
+  );
+
   const totalAccounts = accounts?.length || 0;
   const totalBalance = (accounts || []).reduce((sum: number, acc) => {
     const balance = acc?.balances?.current ?? 0;
     return sum + balance;
   }, 0);
-  const displayCurrency = accounts?.[0]?.balances?.iso_currency_code || 'GBP';
 
-  const totalTransactions = transactions?.length || 0;
-  const totals = (transactions || []).reduce(
-    (agg, tx) => {
+  const totalTransactions = filteredTransactions.length;
+  const totals = filteredTransactions.reduce(
+    (agg: any, tx: Transaction) => {
       const amt = typeof tx.amount === 'number' ? tx.amount : 0;
       if (amt < 0) {
         agg.expenses += Math.abs(amt);
@@ -40,6 +54,20 @@ export default function Dashboard({ accounts, transactions }) {
     { income: 0, expenses: 0 }
   );
   const net = totals.income - totals.expenses;
+  const selectedAccount = accounts.find(
+    (acc) => acc.account_id === selectedAccountId
+  );
+
+  //display variables to render
+  const displayCurrency = selectedAccount?.balances?.iso_currency_code || 'GBP';
+  const displayBalance =
+    selectedAccountId && selectedAccount
+      ? selectedAccount.balances.current ?? 0
+      : totalBalance;
+  const displayAccounts =
+    selectedAccountId && selectedAccount
+      ? selectedAccount.name
+      : 'All Accounts';
 
   return (
     <div className='flex-1 p-6 overflow-y-auto bg-[rgb(var(--color-theme-surface))] rounded-2xl'>
@@ -55,16 +83,52 @@ export default function Dashboard({ accounts, transactions }) {
             Here's your financial overview
           </p>
         </div>
-        <ConnectBankButton></ConnectBankButton>
+        <div>
+          <label className='text-sm text-[color:rgb(var(--color-theme-text-secondary))] mt-1'>
+            Select Account to Overview:
+          </label>
+          <select
+            value={selectedAccountId || ''}
+            onChange={(e) => setSelectedAccountId(e.target.value || null)}
+            className='ml-2 p-2 border border-gray-300 rounded'
+          >
+            <option
+              value=''
+              className='bg-[color:rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'
+            >
+              All Accounts
+            </option>
+            {accounts?.map((acc) => (
+              <option
+                key={acc.account_id}
+                value={acc.account_id}
+                className='bg-[color:rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'
+              >
+                {acc.name} (
+                {formatCurrency(
+                  acc.balances.current,
+                  acc.balances.iso_currency_code
+                )}
+                )
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className='flex flex-col text-center'>
+          <ConnectBankButton></ConnectBankButton>
+          <p className='text-[color:rgb(var(--color-theme-text-secondary))] text-lg'>
+            {totalAccounts} Accounts Connected
+          </p>
+        </div>
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6'>
         <Card>
           <CardContent>
             <h3 className='text-[color:rgb(var(--color-theme-text-secondary))] text-sm'>
-              Accounts
+              Overview of
             </h3>
             <p className='text-2xl text-[color:rgb(var(--color-theme-text-secondary))] font-semibold'>
-              {totalAccounts}
+              {displayAccounts}
             </p>
           </CardContent>
         </Card>
@@ -74,7 +138,7 @@ export default function Dashboard({ accounts, transactions }) {
               Total Balance
             </h3>
             <p className='text-2xl text-[color:rgb(var(--color-theme-text-secondary))] font-semibold'>
-              {formatCurrency(totalBalance, displayCurrency)}
+              {formatCurrency(displayBalance, displayCurrency)}
             </p>
           </CardContent>
         </Card>

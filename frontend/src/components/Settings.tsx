@@ -1,19 +1,20 @@
 import Button from './ui/Buttons/Button.tsx';
-import { Coins, MonitorCog, Moon, Sun } from 'lucide-react';
+import { Coins, DollarSign, MonitorCog, Moon, Sun } from 'lucide-react';
 import { useContext } from 'react';
 import { SettingsContext } from '../../context/settingsContext.tsx';
 import { useTheme } from '../../context/themeContext.tsx';
 import React from 'react';
 import { Card } from './ui/Card.jsx';
+import { log } from 'console';
 
 export default function Settings() {
   const {
     currency,
-    highContrast,
-    largeText,
+    // highContrast,
+    // largeText,
     setCurrency,
-    setHighContrast,
-    setLargeText,
+    // setHighContrast,
+    // setLargeText,
   } = useContext(SettingsContext);
 
   const { darkMode, toggleDarkMode } = useTheme();
@@ -48,11 +49,51 @@ export default function Settings() {
             ) : (
               <Sun className='w-5 h-5' />
             )}
-            <label className='form-check-label' htmlFor='checkDarkMode' />
+            <label
+              className='form-check-label'
+              htmlFor='checkDarkMode'
+            />
           </div>
           <h2 className='text-lg font-semibold my-3'>Currency</h2>
           <div className='dropdown'>
-            <button></button>
+            <select
+              onChange={(e) => {
+                setCurrency(e.target.value);
+                console.log(currency);
+              }}
+              value={currency}
+            >
+              <label>Currency</label>
+              <option
+                value='USD'
+                className='bg-[color:rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'
+              >
+                <span>
+                  <svg>
+                    <DollarSign className='inline w-4 h-4 mr-1' />
+                  </svg>
+                  US Dollars
+                </span>
+              </option>
+              <option
+                value='EUR'
+                className='bg-[color:rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'
+              >
+                EU Euros
+              </option>
+              <option
+                value='GBP'
+                className='bg-[color:rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'
+              >
+                GB Pounds
+              </option>
+              <option
+                value='CNY'
+                className='bg-[color:rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'
+              >
+                CN Yuan
+              </option>
+            </select>
           </div>
         </Card>
       </div>

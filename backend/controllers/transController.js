@@ -1,9 +1,8 @@
 import { client } from '../plaidClient.js';
 import User from '../models/user.js';
-import { Configuration, PlaidApi, PlaidEnvironments } from 'plaid';
 
 // Get transactions
-export const getTransactions = async (req, res) => {
+export const getUserTransactions = async (req, res) => {
   try {
     const { userId } = req.params;
     const { accountId, start_date, end_date } = req.query;
@@ -18,7 +17,26 @@ export const getTransactions = async (req, res) => {
       options: accountId ? { account_ids: [accountId] } : undefined,
     });
 
-    res.json({ transactions: response.data.transactions });
+    const transactions = response.data.transactions;
+
+    const income = transactions
+      .filter((t) => t.amount < 0)
+      .reduce((sum, tx) => sum + tx.amount, 0);
+
+    const expenses = transactions
+      .filter((t) => t.amouunt > 0)
+      .reduce((sum, tx) => sum + tx.amount, 0);
+
+    const categories = {};
+    for (const tx of transactions) {
+      const cat = tx.category?.[0] || 'Uncategorised';
+      categories[cat] = (categories[cat] || 0) + tx.amount;
+    }
+
+    res.json({
+      transactions,
+      summary: { income, expenses, categories },
+    });
   } catch (error) {
     console.error(
       'Plaid transactions error:',

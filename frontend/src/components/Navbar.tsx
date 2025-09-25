@@ -11,8 +11,6 @@ const Navbar = ({ openLogin }) => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
 
-  const { darkMode, toggleDarkMode } = useTheme();
-
   const logout = async () => {
     try {
       await axios.post('/api/logout', {}, { withCredentials: true });
@@ -52,7 +50,7 @@ const Navbar = ({ openLogin }) => {
       <div className='flex items-center gap-4 text-center'>
         {!user && (
           <Button
-            variant='success'
+            variant='primary'
             onClick={openLogin}
           >
             <div className='mr-2'>
@@ -67,24 +65,7 @@ const Navbar = ({ openLogin }) => {
             <h1 className='text-[color:rgb(var(--color-theme-text-primary))] flex w-fit text-lg items-center font-bold'>
               {user?.firstname + ' ' + user?.lastname || 'User'}
             </h1>
-            <div className='form-check form-switch'>
-              <input
-                className='form-check-input'
-                type='checkbox'
-                id='checkDarkMode'
-                checked={darkMode}
-                onChange={() => toggleDarkMode()}
-              />
-              {darkMode ? (
-                <Moon className='w-5 h-5' />
-              ) : (
-                <Sun className='w-5 h-5' />
-              )}
-              <label
-                className='form-check-label'
-                htmlFor='checkDarkMode'
-              />
-            </div>
+
             <div className='flex flex-row ml-5 gap-2'>
               <Button
                 variant='secondary'

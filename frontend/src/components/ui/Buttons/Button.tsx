@@ -50,7 +50,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseClasses =
-      'flex justify-between rounded text-center items-center font-medium cursor-pointer transition-colors h-fit m-2';
+      'flex justify-between rounded text-center items-center font-medium h-fit m-2 ' +
+      'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-inherit';
 
     const variants = {
       primary:
@@ -68,7 +69,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       addbank:
         'text-[color:rgb(var(--color-theme-text-button))] bg-[rgb(var(--color-theme-accent))] hover:bg-[rgb(var(--color-theme-accent)/0.9)]',
       premium:
-        'bg-yellow-600/40 hover:bg-yellow-700 text-[color:rgb(var(--color-theme-text-button))] border border-[rgb(var(--color-theme-border))]',
+        'w-full bg-yellow-600/40 hover:bg-yellow-700 text-[color:rgb(var(--color-theme-text-button))] border border-[rgb(var(--color-theme-border))]',
       muted:
         'border border-[rgb(var(--color-theme-border))] bg-[rgb(var(--color-theme-muted))] text-[color:rgb(var(--color-theme-text-button))] hover:bg-[rgb(var(--color-theme-muted)/0.9)]',
       aside:
