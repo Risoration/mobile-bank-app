@@ -42,16 +42,8 @@ jobs:
 
       - name: Build application
         run: |
-          if npm run build --help 2>/dev/null; then
-            npm run build
-          elif command -v vite &> /dev/null; then
-            npx vite build
-          elif command -v webpack &> /dev/null; then
-            npx webpack --mode=production
-          else
-            echo "No build command found"
-            exit 1
-          fi
+          cd frontend
+          npm run build
         env:
           # Set the base URL for GitHub Pages
           PUBLIC_URL: /${{ github.event.repository.name }}
