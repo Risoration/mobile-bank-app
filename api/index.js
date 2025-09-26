@@ -1,7 +1,6 @@
 // Vercel serverless function entry point
 import express from 'express';
 import dotenv from 'dotenv';
-import { connectDB } from '../backend/config/db.js';
 import userRoutes from '../backend/routes/userRoutes.js';
 import authRoutes from '../backend/routes/authRoutes.js';
 import budgetRoutes from '../backend/routes/budgetRoutes.js';

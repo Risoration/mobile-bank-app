@@ -1,9 +1,7 @@
 // API configuration
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL ||
-  (import.meta.env.PROD ? '' : 'http://localhost:5000');
+const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const API_CONFIG = {
+const API_CONFIG = {
   BASE_URL: API_BASE_URL,
   ENDPOINTS: {
     AUTH: `${API_BASE_URL}/api`,
@@ -15,4 +13,4 @@ export const API_CONFIG = {
   },
 };
 
-export default API_CONFIG;
+export { API_CONFIG };

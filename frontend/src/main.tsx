@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import { ThemeProvider } from '../context/themeContext';
 import axios from 'axios';
-import { API_CONFIG } from './config/api';
+import { API_CONFIG } from './config/api.ts';
 
 // Configure axios with the API base URL
 axios.defaults.baseURL = API_CONFIG.BASE_URL;
