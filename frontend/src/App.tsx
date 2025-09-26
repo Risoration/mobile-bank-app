@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Register from './pages/Register';
 import { Home } from './pages/Home';
-import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { UserContextProvider } from '../context/userContext';
 import { SettingsProvider } from '../context/settingsContext';

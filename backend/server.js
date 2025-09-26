@@ -16,18 +16,19 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Connect to database and then start server
+// Connect to database
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(PORT, () => {
-      console.log(`🚀 Server is running on port http://localhost:${PORT}`);
-    });
+    console.log('✅ Database connected');
   } catch (error) {
-    console.error('❌ Failed to start server:', error.message);
+    console.error('❌ Failed to connect to database:', error.message);
     process.exit(1);
   }
 };
+
+// Start database connection
+startServer();
 
 //app configuration
 app.use(express.json()); // Middleware to parse JSON data
@@ -66,4 +67,5 @@ app.use('/api/users', userRoutes);
 app.use('/api/budgets', budgetRoutes);
 app.use('/api/transactions', transRoutes);
 
-startServer();
+// Export the app for Vercel serverless functions
+export default app;
