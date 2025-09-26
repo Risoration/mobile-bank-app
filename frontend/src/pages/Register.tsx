@@ -6,6 +6,7 @@ import axios from 'axios';
 import Button from '../components/ui/Buttons/Button';
 import React from 'react';
 import Input from '../components/ui/Input';
+import { API_CONFIG } from '../config/api';
 
 interface RegisterProps {
   switchToLogin: () => void;
@@ -33,12 +34,15 @@ const Register: React.FC<RegisterProps> = ({ switchToLogin }) => {
     }
 
     try {
-      const { data: response } = await axios.post('/api/register', {
-        email,
-        firstname,
-        lastname,
-        password,
-      });
+      const { data: response } = await axios.post(
+        `${API_CONFIG.ENDPOINTS.AUTH}/register`,
+        {
+          email,
+          firstname,
+          lastname,
+          password,
+        }
+      );
       if (response.error) {
         toast.error(response.error);
       } else {

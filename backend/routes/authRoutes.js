@@ -13,12 +13,23 @@ const router = express.Router();
 router.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:5173',
+    origin: [
+      'http://localhost:5173',
+      'https://revolve-bank-app.vercel.app',
+      'https://revolve-bank-app-git-main-risoration.vercel.app',
+    ],
   })
 );
 router.options(
   '*',
-  cors({ credentials: true, origin: 'http://localhost:5173' })
+  cors({
+    credentials: true,
+    origin: [
+      'http://localhost:5173',
+      'https://revolve-bank-app.vercel.app',
+      'https://revolve-bank-app-git-main-risoration.vercel.app',
+    ],
+  })
 );
 
 router.get('/', test);

@@ -8,6 +8,7 @@ import Input from '../components/ui/Input';
 import React from 'react';
 import Button from '../components/ui/Buttons/Button';
 import PasswordInput from '../components/ui/password-input';
+import { API_CONFIG } from '../config/api';
 
 const Login = ({ switchToRegister, setModalOpen }) => {
   const [data, setData] = useState({
@@ -18,14 +19,12 @@ const Login = ({ switchToRegister, setModalOpen }) => {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
 
-  const API_URL = process.env.API_URL || 'http://localhost:5000';
-
   const loginUser = async (e) => {
     e.preventDefault();
     const { email, password } = data;
 
     try {
-      const { data } = await axios.post(`${API_URL}/api/login`, {
+      const { data } = await axios.post(`${API_CONFIG.ENDPOINTS.AUTH}/login`, {
         email,
         password,
       });
