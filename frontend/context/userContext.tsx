@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { createContext, useState, useEffect } from 'react';
-import { API_CONFIG } from '../src/config/api.ts';
+import { API_CONFIG } from '../src/config/api';
 
 export type UserContextType = {
   user: User | null;

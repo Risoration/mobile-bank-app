@@ -12,11 +12,6 @@ import MainPage from './pages/MainPage';
 import './index.css';
 import Modal from './components/Modal';
 import Login from './pages/Login';
-import { API_CONFIG } from './config/api';
-
-// Configure axios with the API base URL
-axios.defaults.baseURL = API_CONFIG.BASE_URL;
-axios.defaults.withCredentials = true;
 
 type ModalView = 'input' | 'login' | 'register';
 
