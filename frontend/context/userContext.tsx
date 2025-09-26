@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { createContext, useState, useEffect } from 'react';
+import { API_CONFIG } from '../src/config/api.ts';
 
 export type UserContextType = {
   user: User | null;
@@ -35,7 +36,9 @@ export function UserContextProvider({
     async function checkAuth() {
       try {
         setLoading(true);
-        const { data } = await axios.get('/api/profile');
+        const { data } = await axios.get(
+          `${API_CONFIG.ENDPOINTS.AUTH}/profile`
+        );
         if (data) {
           const normalized = {
             id: data.id || data._id,

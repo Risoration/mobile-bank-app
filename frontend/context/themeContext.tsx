@@ -32,11 +32,6 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [darkMode]);
 
-  useEffect(() => {
-    console.log('darkMode =', darkMode);
-    console.log('classes on <html>:', document.documentElement.className);
-  }, [darkMode]);
-
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
