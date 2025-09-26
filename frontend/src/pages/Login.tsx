@@ -18,12 +18,14 @@ const Login = ({ switchToRegister, setModalOpen }) => {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
 
+  const API_URL = process.env.API_URL || 'http://localhost:5000';
+
   const loginUser = async (e) => {
     e.preventDefault();
     const { email, password } = data;
 
     try {
-      const { data } = await axios.post('/api/login', {
+      const { data } = await axios.post(`${API_URL}/api/login`, {
         email,
         password,
       });
