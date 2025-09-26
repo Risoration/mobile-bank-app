@@ -36,6 +36,8 @@ const allowedOrigins = [
   'http://localhost:5173', // Development
   'https://risoration.github.io', // GitHub Pages
   'https://risoration.github.io/revolve-bank-app', // GitHub Pages with path
+  'https://revolve-bank-app.vercel.app', // Vercel
+  'https://revolve-bank-app-git-main-risoration.vercel.app', // Vercel preview
 ];
 
 app.use(
