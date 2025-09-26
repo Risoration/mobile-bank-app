@@ -6,13 +6,11 @@ on:
   pull_request:
     branches: [main]
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 concurrency:
   group: 'pages'
   cancel-in-progress: false
@@ -28,11 +26,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20.19.0' # or '22.12.0'
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          cd frontend
+          npm ci
 
       - name: Run tests
         run: npm test --if-present || echo "No tests found, skipping..."
@@ -41,9 +41,6 @@ jobs:
         run: |
           cd frontend
           npm run build
-        env:
-          # Set the base URL for GitHub Pages
-          PUBLIC_URL: /${{ github.event.repository.name }}
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -69,10 +66,7 @@ jobs:
           path: dist/
 
       - name: Deploy to Staging
-        run: |
-          # Add your staging deployment commands here
-          echo "Deploying to staging environment..."
-          # Example: Deploy to Netlify, Vercel, S3, etc.
+        run: echo "Deploying to staging environment..."
 
   deploy:
     needs: build-and-test
@@ -90,7 +84,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-files
-          path: build/
+          path: dist/
 
       - name: Upload to GitHub Pages
         uses: actions/upload-pages-artifact@v3
