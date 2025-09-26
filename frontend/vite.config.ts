@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: process.env.VITE_BASE_PATH || '/revolve-bank-app',
+  base: process.env.VITE_BASE_URL || '/revolve-bank-app',
   server: {
     proxy: {
       '/api': {
