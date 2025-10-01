@@ -1,15 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from '../../context/userContext';
 import axios from 'axios';
 import Button from './ui/Buttons/Button';
-import { LogIn, Sun, Moon } from 'lucide-react';
+import { LogIn, Sun, Moon, Menu, X } from 'lucide-react';
 import React from 'react';
 import { useTheme } from '../../context/themeContext';
 
 const Navbar = ({ openLogin }) => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const logout = async () => {
     try {
@@ -29,60 +30,137 @@ const Navbar = ({ openLogin }) => {
   };
 
   return (
-    <div
-      className='h-[50px] flex items-center justify-between flex-col sm:flex-row 
-      bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))]'
-    >
-      {/* Logo */}
-      <div
-        className='
-          px-10 text-[25px] font-extrabold uppercase text-center cursor-pointer
-          text-[color:rgb(var(--color-theme-text-primary))] hover:text-[color:rgb(var(--color-theme-accent))]/70
-        '
-        onClick={user ? () => navigate('/main') : () => navigate('/home')}
-      >
-        <h2 className='text-[color:rgb(var(--color-theme-text-primary))]'>
+    <div className='bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))]'>
+      {/* Desktop Navbar */}
+      <div className='hidden md:flex h-[50px] items-center justify-between px-4'>
+        {/* Logo */}
+        <div
+          className='text-[25px] font-extrabold uppercase cursor-pointer
+          text-[color:rgb(var(--color-theme-text-primary))] hover:text-[color:rgb(var(--color-theme-accent))]/70'
+          onClick={user ? () => navigate('/main') : () => navigate('/home')}
+        >
+          <h2 className='text-[color:rgb(var(--color-theme-text-primary))]'>
+            Revolve
+          </h2>
+        </div>
+
+        {/* Right side */}
+        <div className='flex items-center gap-4'>
+          {!user && (
+            <Button
+              variant='primary'
+              onClick={openLogin}
+              className='text-sm px-4 py-2'
+            >
+              <div className='mr-2'>
+                <LogIn size={16} />
+              </div>
+              Log In / Sign Up
+            </Button>
+          )}
+
+          {user && (
+            <>
+              <h1 className='text-[color:rgb(var(--color-theme-text-primary))] text-lg font-bold'>
+                {user?.firstname + ' ' + user?.lastname || 'User'}
+              </h1>
+
+              <div className='flex gap-2'>
+                <Button
+                  variant='secondary'
+                  onClick={() => navigate('/main')}
+                  className='text-sm px-3 py-1'
+                >
+                  Dashboard
+                </Button>
+                <Button
+                  variant='secondary'
+                  onClick={logout}
+                  className='text-sm px-3 py-1'
+                >
+                  Sign Out
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Mobile Navbar */}
+      <div className='md:hidden flex items-center justify-between p-4'>
+        {/* Logo */}
+        <div
+          className='text-xl font-extrabold uppercase cursor-pointer
+          text-[color:rgb(var(--color-theme-text-primary))] hover:text-[color:rgb(var(--color-theme-accent))]/70'
+          onClick={user ? () => navigate('/main') : () => navigate('/home')}
+        >
           Revolve
-        </h2>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className='text-[color:rgb(var(--color-theme-text-primary))] p-2'
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
-      {/* Right side */}
-      <div className='flex items-center gap-4 text-center'>
-        {!user && (
-          <Button
-            variant='primary'
-            onClick={openLogin}
-          >
-            <div className='mr-2'>
-              <LogIn />
-            </div>
-            Log In / Sign Up
-          </Button>
-        )}
-
-        {user && (
-          <>
-            <h1 className='text-[color:rgb(var(--color-theme-text-primary))] flex w-fit text-lg items-center font-bold'>
-              {user?.firstname + ' ' + user?.lastname || 'User'}
-            </h1>
-
-            <div className='flex flex-row ml-5 gap-2'>
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className='md:hidden border-t border-[rgb(var(--color-theme-border))] bg-[rgb(var(--color-theme-background))]'>
+          <div className='px-4 py-4 space-y-4'>
+            {!user && (
               <Button
-                variant='secondary'
-                onClick={() => navigate('/main')}
+                variant='primary'
+                onClick={() => {
+                  openLogin();
+                  setIsMobileMenuOpen(false);
+                }}
+                className='w-full'
               >
-                My Dashboard
+                <div className='mr-2'>
+                  <LogIn size={16} />
+                </div>
+                Log In / Sign Up
               </Button>
-              <Button
-                variant='secondary'
-                onClick={logout}
-              >
-                Sign Out
-              </Button>
-            </div>
-          </>
-        )}
-      </div>
+            )}
+
+            {user && (
+              <>
+                <div className='text-center py-2'>
+                  <h1 className='text-[color:rgb(var(--color-theme-text-primary))] text-lg font-bold'>
+                    {user?.firstname + ' ' + user?.lastname || 'User'}
+                  </h1>
+                </div>
+
+                <div className='space-y-2'>
+                  <Button
+                    variant='secondary'
+                    onClick={() => {
+                      navigate('/main');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className='w-full'
+                  >
+                    My Dashboard
+                  </Button>
+                  <Button
+                    variant='secondary'
+                    onClick={() => {
+                      logout();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className='w-full'
+                  >
+                    Sign Out
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

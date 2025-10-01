@@ -22,7 +22,7 @@ const App: React.FC = () => {
     <UserContextProvider>
       <SettingsProvider>
         <ThemeProvider>
-          <div className='bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))] max-h-screen overflow-y-auto'>
+          <div className='bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))] min-h-screen overflow-y-auto'>
             <Navbar
               openLogin={() => {
                 setModalView('login');
@@ -31,8 +31,14 @@ const App: React.FC = () => {
             />
 
             <Toaster
-              position='bottom-right'
-              toastOptions={{ duration: 2000 }}
+              position='top-center'
+              toastOptions={{
+                duration: 2000,
+                style: {
+                  fontSize: '14px',
+                  padding: '12px 16px',
+                },
+              }}
             />
 
             <Routes>

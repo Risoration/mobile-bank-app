@@ -43,19 +43,13 @@ export default function MainPage() {
   }, [user, startDate, endDate]);
 
   return (
-    <div
-      className={`h-full font-thin bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))]`}
-    >
-      <div className='flex justify-between m-3 h-fit bg-[rgb(var(--color-theme-background))]'>
+    <div className='h-full font-thin bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))]'>
+      <div className='flex flex-col md:flex-row justify-between m-3 h-fit bg-[rgb(var(--color-theme-background))]'>
         {/* Sidebar */}
         <Sidebar onViewChange={setPageView} />
 
         {/* Main Content */}
-        <main
-          className={
-            'flex-1 p-6 overflow-y-auto rounded-2xl bg-[rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))] mb-2'
-          }
-        >
+        <main className='flex-1 p-3 md:p-6 overflow-y-auto rounded-2xl bg-[rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))] mb-2 md:ml-0'>
           {pageView === 'dashboard' && (
             <Dashboard
               accounts={accounts}

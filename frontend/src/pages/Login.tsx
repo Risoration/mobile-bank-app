@@ -53,40 +53,46 @@ const Login = ({ switchToRegister, setModalOpen }) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error('Login failed. Please try again.');
+      toast.error('Login failed. Please try again.', error.message);
     }
   };
 
   return (
-    <div className='h-screen flex items-center justify-center'>
+    <div className='min-h-screen flex items-center justify-center p-4'>
       <form
         onSubmit={loginUser}
-        className='max-w-md bg-[rgb(var(--color-theme-surface))] rounded-lg shadow-md'
+        className='w-full max-w-md bg-[rgb(var(--color-theme-surface))] rounded-lg shadow-md'
       >
-        <div className='flex flex-col justify-center text-[color:rgb(var(--color-theme-text-primary))] p-12 rounded-md h-full'>
+        <div className='flex flex-col justify-center text-[color:rgb(var(--color-theme-text-primary))] p-6 md:p-12 rounded-md'>
           <span className='flex flex-col mb-6'>
-            <h1 className='mb-6 text-md font-sans'>Login</h1>
+            <h1 className='mb-6 text-lg md:text-xl font-sans text-center'>
+              Login
+            </h1>
           </span>
 
-          <div className='flex flex-col gap-4 items-center max-w-sm justify-center'>
-            <Input
-              label='Email'
-              type='email'
-              placeholder='Enter your Email'
-              value={data.email}
-              onChange={(e) => setData({ ...data, email: e.target.value })}
-            />
-            <PasswordInput
-              type='password'
-              placeholder='Enter your Password'
-              value={data.password}
-              onChange={(e) => setData({ ...data, password: e.target.value })}
-            />
+          <div className='flex flex-col gap-4 items-center w-full'>
+            <div className='w-full'>
+              <Input
+                label='Email'
+                type='email'
+                placeholder='Enter your Email'
+                value={data.email}
+                onChange={(e) => setData({ ...data, email: e.target.value })}
+              />
+            </div>
+            <div className='w-full'>
+              <PasswordInput
+                type='password'
+                placeholder='Enter your Password'
+                value={data.password}
+                onChange={(e) => setData({ ...data, password: e.target.value })}
+              />
+            </div>
             <Button
               type='submit'
               variant='register'
               size='md'
-              className='w-full'
+              className='w-full mt-4'
             >
               Log In
             </Button>

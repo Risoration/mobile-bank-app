@@ -1,5 +1,16 @@
 // API configuration
-const API_BASE_URL = import.meta.env.VITE_BASE_URL;
+const getApiBaseUrl = () => {
+  // Check if we're in development mode
+  if (import.meta.env.DEV) {
+    // Development: use localhost backend
+    return 'http://localhost:5000';
+  } else {
+    // Production: use environment variable or fallback to current domain
+    return import.meta.env.VITE_BASE_URL || window.location.origin;
+  }
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 const API_CONFIG = {
   BASE_URL: API_BASE_URL,
@@ -12,5 +23,12 @@ const API_CONFIG = {
     PLAID: `${API_BASE_URL}/api`,
   },
 };
+
+// Log the API configuration in development
+if (import.meta.env.DEV) {
+  console.log('🔧 Development mode - API Base URL:', API_BASE_URL);
+} else {
+  console.log('🚀 Production mode - API Base URL:', API_BASE_URL);
+}
 
 export { API_CONFIG };

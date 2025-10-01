@@ -3,9 +3,9 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react(), tailwindcss()],
-  base: process.env.VITE_BASE_URL || '/revolve-bank-app',
+  base: '/',
   server: {
     proxy: {
       '/api': {
@@ -14,6 +14,11 @@ export default defineConfig({
         secure: false,
       },
     },
+  },
+  define: {
+    // Define environment variables for the build
+    __DEV__: mode === 'development',
+    __PROD__: mode === 'production',
   },
   css: {
     preprocessorOptions: {

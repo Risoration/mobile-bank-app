@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Building2,
   PieChart,
@@ -6,6 +6,8 @@ import {
   Settings,
   ArrowLeftCircle,
   Building,
+  Menu,
+  X,
 } from 'lucide-react';
 import Button from './ui/Buttons/Button';
 import { UserContext } from '../../context/userContext';
@@ -27,42 +29,99 @@ const navigation = [
 
 export default function Sidebar({ onViewChange }) {
   const { user } = useContext(UserContext);
-  return (
-    <aside
-      className='w-55 shadow-md p-4 flex flex-col items-center rounded-2xl h-screen mr-5
-                 bg-[rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'
-    >
-      <nav className='flex flex-col w-full'>
-        {navigation.map((item) => {
-          const Icon = item.icon;
-          const isDisabled = item.premium && user?.subscriptionTier === 'free';
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-          return (
-            <div
-              key={item.id}
-              className='relative group'
-            >
-              <span
-                className='d-inline-block w-full'
-                data-toggle='tooltip'
-                title='Updade to Revolve Premium to access this feature'
+  const handleViewChange = (view) => {
+    onViewChange(view);
+    setIsMobileMenuOpen(false);
+  };
+
+  return (
+    <>
+      {/* Desktop Sidebar */}
+      <aside className='hidden md:block w-55 shadow-md p-4 flex flex-col items-center rounded-2xl h-screen mr-5 bg-[rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'>
+        <nav className='flex flex-col w-full'>
+          {navigation.map((item) => {
+            const Icon = item.icon;
+            const isDisabled =
+              item.premium && user?.subscriptionTier === 'free';
+
+            return (
+              <div
+                key={item.id}
+                className='relative group'
               >
-                <Button
-                  variant={item.premium ? 'premium' : 'aside'}
-                  className={`px-4 py-2 rounded ${
-                    isDisabled ? 'pointer-events-none' : ''
-                  }`}
-                  onClick={() => onViewChange(item.id)}
-                  disabled={isDisabled}
+                <span
+                  className='d-inline-block w-full'
+                  data-toggle='tooltip'
+                  title='Upgrade to Revolve Premium to access this feature'
                 >
-                  <Icon className='w-5 h-5' />
-                  <span>{item.label}</span>
-                </Button>
-              </span>
+                  <Button
+                    variant={item.premium ? 'premium' : 'aside'}
+                    className={`px-4 py-2 rounded ${
+                      isDisabled ? 'pointer-events-none' : ''
+                    }`}
+                    onClick={() => onViewChange(item.id)}
+                    disabled={isDisabled}
+                  >
+                    <Icon className='w-5 h-5' />
+                    <span>{item.label}</span>
+                  </Button>
+                </span>
+              </div>
+            );
+          })}
+        </nav>
+      </aside>
+
+      {/* Mobile Sidebar */}
+      <div className='md:hidden'>
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className='fixed top-16 left-4 z-50 p-2 bg-[rgb(var(--color-theme-surface))] rounded-lg shadow-md text-[color:rgb(var(--color-theme-text-primary))]'
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div
+            className='fixed inset-0 z-40 bg-black bg-opacity-50'
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <div
+              className='fixed left-0 top-0 h-full w-64 bg-[rgb(var(--color-theme-surface))] shadow-lg'
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className='p-4 pt-16'>
+                <nav className='flex flex-col space-y-2'>
+                  {navigation.map((item) => {
+                    const Icon = item.icon;
+                    const isDisabled =
+                      item.premium && user?.subscriptionTier === 'free';
+
+                    return (
+                      <Button
+                        key={item.id}
+                        variant={item.premium ? 'premium' : 'aside'}
+                        className={`w-full justify-start px-4 py-3 rounded ${
+                          isDisabled ? 'pointer-events-none opacity-50' : ''
+                        }`}
+                        onClick={() => handleViewChange(item.id)}
+                        disabled={isDisabled}
+                      >
+                        <Icon className='w-5 h-5 mr-3' />
+                        <span>{item.label}</span>
+                      </Button>
+                    );
+                  })}
+                </nav>
+              </div>
             </div>
-          );
-        })}
-      </nav>
-    </aside>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

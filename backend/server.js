@@ -11,7 +11,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 // Load .env file from the backend directory
-dotenv.config();
+dotenv.config({ path: './backend/.env' });
 
 const app = express();
 
@@ -65,6 +65,12 @@ app.use('/api/accounts', accRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/budgets', budgetRoutes);
 app.use('/api/transactions', transRoutes);
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
 
 // Export the app for Vercel serverless functions
 export default app;

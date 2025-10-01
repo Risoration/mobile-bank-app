@@ -3,7 +3,31 @@
 /* Teal Theme CSS for Tailwind v4 */
 /* Professional Teal (Light) & Midnight Teal (Dark) */
 
- :root {
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  /* Ensure proper touch targets */
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Improve text readability on mobile */
+  body {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Prevent horizontal scroll */
+  * {
+    max-width: 100%;
+  }
+}
+
+:root {
   --color-theme-primary: 15 118 110; /* teal-700 */
   --color-theme-background: 254 254 254;
   --color-theme-surface: 241 245 249; /* slate-100 */
@@ -19,7 +43,7 @@
   --color-theme-info: 59 130 246; /* blue-500 */
 }
 
- :root.dark {
+:root.dark {
   --color-theme-primary: 45 212 191; /* teal-400 */
   --color-theme-background: 2 6 23; /* slate-950 */
   --color-theme-surface: 15 23 42; /* slate-900 */
@@ -52,7 +76,6 @@ body {
 
 /* Smooth transitions for theme switching */
 * {
-  transition: background-color 0.2s ease-in-out, 
-              border-color 0.2s ease-in-out, 
-              color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
 }
