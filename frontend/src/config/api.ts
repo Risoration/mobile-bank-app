@@ -5,8 +5,8 @@ const getApiBaseUrl = () => {
     // Development: use localhost backend
     return 'http://localhost:5000';
   } else {
-    // Production: use environment variable or fallback to current domain
-    return import.meta.env.VITE_BASE_URL || window.location.origin;
+    // Production: API on same domain
+    return window.location.origin;
   }
 };
 

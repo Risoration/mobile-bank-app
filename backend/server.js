@@ -34,10 +34,10 @@ app.use(express.json()); // Middleware to parse JSON data
 // CORS configuration for production
 const allowedOrigins = [
   'http://localhost:5173', // Development
-  'https://risoration.github.io', // GitHub Pages
-  'https://risoration.github.io/revolve-bank-app', // GitHub Pages with path
-  'https://revolve-bank-app.vercel.app', // Vercel
-  'https://revolve-bank-app-git-main-risoration.vercel.app', // Vercel preview
+  'https://revolve-bank.vercel.app', // Main production frontend domain
+  'https://revolve-bank-app.vercel.app', // Alternative Vercel domain
+  'https://revolve-bank-app-git-main-risoration.vercel.app', // Vercel preview deployments
+  'https://revolve-serverless-function-express.vercel.app', // Separate backend deployment (self-reference)
 ];
 
 app.use(
@@ -66,11 +66,13 @@ app.use('/api/users', userRoutes);
 app.use('/api/budgets', budgetRoutes);
 app.use('/api/transactions', transRoutes);
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+// Start server only in development (not in Vercel serverless)
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+}
 
 // Export the app for Vercel serverless functions
 export default app;
