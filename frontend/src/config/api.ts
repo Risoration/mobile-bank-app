@@ -5,8 +5,8 @@ const getApiBaseUrl = () => {
     // Development: use localhost backend
     return 'http://localhost:5000';
   } else {
-    // Production: API on same domain
-    return window.location.origin;
+    // Production: use Render backend (will be updated after deployment)
+    return 'https://revolve-bank-api.onrender.com';
   }
 };
 
