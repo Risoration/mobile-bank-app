@@ -10,8 +10,13 @@ import accRoutes from './routes/accRoutes.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-// Load .env file from the backend directory
-dotenv.config({ path: './backend/.env' });
+// Load environment variables (works in both local and serverless)
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config({ path: './backend/.env' });
+} else {
+  // In production/serverless, environment variables are already available
+  dotenv.config();
+}
 
 const app = express();
 
@@ -22,7 +27,10 @@ const startServer = async () => {
     console.log('✅ Database connected');
   } catch (error) {
     console.error('❌ Failed to connect to database:', error.message);
-    process.exit(1);
+    // Don't exit in serverless - just log the error
+    if (process.env.NODE_ENV !== 'production') {
+      process.exit(1);
+    }
   }
 };
 
@@ -65,6 +73,15 @@ app.use('/api/accounts', accRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/budgets', budgetRoutes);
 app.use('/api/transactions', transRoutes);
+
+// Add a health check route for testing
+app.get('/api/', (req, res) => {
+  res.json({
+    message: 'API is working!',
+    status: 'success',
+    timestamp: new Date().toISOString(),
+  });
+});
 
 // Start server only in development (not in Vercel serverless)
 if (process.env.NODE_ENV !== 'production') {
