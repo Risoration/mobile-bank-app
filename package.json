@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "cd frontend && npm install && npm run build",
+    "build": "cd frontend && npm install --include=dev && npm run build",
     "dev:backend": "cd backend; npm run dev",
     "dev:frontend": "cd frontend; npm run dev",
     "dev:full": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
