@@ -29,6 +29,11 @@ const userschema = mongoose.Schema(
       required: false,
       default: null,
     },
+    hiddenAccounts: {
+      type: [String],
+      required: false,
+      default: [],
+    },
   },
 
   {

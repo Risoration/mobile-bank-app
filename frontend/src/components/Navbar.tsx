@@ -3,6 +3,7 @@ import { useContext, useState } from 'react';
 import { UserContext } from '../../context/userContext';
 import axios from 'axios';
 import Button from './ui/Buttons/Button';
+import Modal from './Modal';
 import { LogIn, Sun, Moon, Menu, X } from 'lucide-react';
 import React from 'react';
 import { useTheme } from '../../context/themeContext';
@@ -10,6 +11,7 @@ import { useTheme } from '../../context/themeContext';
 const Navbar = ({ openLogin }) => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
+  const [signOutModalOpen, setSignOutModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const logout = async () => {
@@ -27,6 +29,19 @@ const Navbar = ({ openLogin }) => {
       sessionStorage.removeItem('user');
       navigate('/');
     }
+  };
+
+  const handleSignOutClick = () => {
+    setSignOutModalOpen(true);
+  };
+
+  const handleConfirmSignOut = () => {
+    setSignOutModalOpen(false);
+    logout();
+  };
+
+  const handleCancelSignOut = () => {
+    setSignOutModalOpen(false);
   };
 
   return (
@@ -75,7 +90,7 @@ const Navbar = ({ openLogin }) => {
                 </Button>
                 <Button
                   variant='secondary'
-                  onClick={logout}
+                  onClick={handleSignOutClick}
                   className='text-sm px-3 py-1'
                 >
                   Sign Out
@@ -148,7 +163,7 @@ const Navbar = ({ openLogin }) => {
                   <Button
                     variant='secondary'
                     onClick={() => {
-                      logout();
+                      setSignOutModalOpen(true);
                       setIsMobileMenuOpen(false);
                     }}
                     className='w-full'
@@ -161,6 +176,35 @@ const Navbar = ({ openLogin }) => {
           </div>
         </div>
       )}
+
+      {/* Sign Out Confirmation Modal */}
+      <Modal isOpen={signOutModalOpen} onClose={handleCancelSignOut}>
+        <div className='text-center bg-[rgb(var(--color-theme-surface))] p-6 rounded-2xl max-w-md mx-4'>
+          <h3 className='text-xl font-semibold mb-4 text-[color:rgb(var(--color-theme-text-primary))]'>
+            Sign Out
+          </h3>
+          <p className='text-[color:rgb(var(--color-theme-text-secondary))] mb-6'>
+            Are you sure you want to sign out? You'll need to log in again to
+            access your account.
+          </p>
+          <div className='flex gap-4 justify-center'>
+            <Button
+              variant='secondary'
+              onClick={handleCancelSignOut}
+              className='px-6'
+            >
+              Cancel
+            </Button>
+            <Button
+              variant='danger'
+              onClick={handleConfirmSignOut}
+              className='whitespace-nowrap'
+            >
+              Sign Out
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

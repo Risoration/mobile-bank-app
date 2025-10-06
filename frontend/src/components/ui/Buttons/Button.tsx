@@ -83,7 +83,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       xl: 'px-8 py-4 text-xl',
     };
 
-    const buttonClasses = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`;
+    const buttonClasses = `${className} ${baseClasses} ${variants[variant]} ${sizes[size]}`;
 
     return (
       <button

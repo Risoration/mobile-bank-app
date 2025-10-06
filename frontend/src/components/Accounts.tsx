@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card, CardContent } from './ui/Card';
 import ConnectBankButton from './ui/Buttons/ConnectBankButton';
+import { UserContext } from '../../context/userContext';
 
 type AccountsProps = {
   accounts: any[];
+  onAccountsUpdate?: () => void;
 };
 
-export default function Accounts({ accounts }: AccountsProps) {
+export default function Accounts({
+  accounts,
+  onAccountsUpdate,
+}: AccountsProps) {
+  const { user } = useContext(UserContext);
+
   const formatCurrency = (amount?: number, currency?: string) => {
     if (amount == null) return '-';
     try {
@@ -31,7 +38,9 @@ export default function Accounts({ accounts }: AccountsProps) {
             Here's your financial overview
           </p>
         </div>
-        <ConnectBankButton></ConnectBankButton>
+        <div className='flex gap-2'>
+          <ConnectBankButton></ConnectBankButton>
+        </div>
       </div>
 
       {!accounts?.length && (
@@ -49,11 +58,13 @@ export default function Accounts({ accounts }: AccountsProps) {
                   <h2 className='text-xl font-semibold'>
                     {acc.name || acc.official_name || 'Account'}
                   </h2>
-                  {acc.mask && (
-                    <span className='text-sm text-[color:rgb(var(--color-theme-text-primary))]'>
-                      •••• {acc.mask}
-                    </span>
-                  )}
+                  <div className='flex items-center gap-2'>
+                    {acc.mask && (
+                      <span className='text-sm text-[color:rgb(var(--color-theme-text-primary))]'>
+                        •••• {acc.mask}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <div className='mt-1 text-sm text-[color:rgb(var(--color-theme-text-secondary))]'>

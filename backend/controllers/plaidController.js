@@ -4,14 +4,29 @@ import User from '../models/user.js';
 // Create a link token
 export const createLinkToken = async (req, res) => {
   try {
-    const { userId } = req.body || {};
-    const response = await client.linkTokenCreate({
+    const { userId, updateMode } = req.body || {};
+
+    // Check if user has existing access token for update mode
+    let accessToken = null;
+    if (updateMode && userId) {
+      const userDoc = await User.findById(userId).select('accessToken');
+      accessToken = userDoc?.accessToken;
+    }
+
+    const linkTokenRequest = {
       user: { client_user_id: String(userId || 'anonymous') },
-      client_name: 'Revlove',
+      client_name: 'Revolve Bank',
       products: ['transactions', 'auth', 'identity'],
       country_codes: ['GB'],
       language: 'en',
-    });
+    };
+
+    // Add update mode if access token exists
+    if (updateMode && accessToken) {
+      linkTokenRequest.access_token = accessToken;
+    }
+
+    const response = await client.linkTokenCreate(linkTokenRequest);
     res.json({ link_token: response.data.link_token });
   } catch (error) {
     console.error('Plaid error:', error.response?.data || error.message);

@@ -49,51 +49,7 @@ export default function Settings() {
             ) : (
               <Sun className='w-5 h-5' />
             )}
-            <label
-              className='form-check-label'
-              htmlFor='checkDarkMode'
-            />
-          </div>
-          <h2 className='text-lg font-semibold my-3'>Currency</h2>
-          <div className='dropdown'>
-            <select
-              onChange={(e) => {
-                setCurrency(e.target.value);
-                console.log(currency);
-              }}
-              value={currency}
-            >
-              <label>Currency</label>
-              <option
-                value='USD'
-                className='bg-[color:rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'
-              >
-                <span>
-                  <svg>
-                    <DollarSign className='inline w-4 h-4 mr-1' />
-                  </svg>
-                  US Dollars
-                </span>
-              </option>
-              <option
-                value='EUR'
-                className='bg-[color:rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'
-              >
-                EU Euros
-              </option>
-              <option
-                value='GBP'
-                className='bg-[color:rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'
-              >
-                GB Pounds
-              </option>
-              <option
-                value='CNY'
-                className='bg-[color:rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'
-              >
-                CN Yuan
-              </option>
-            </select>
+            <label className='form-check-label' htmlFor='checkDarkMode' />
           </div>
         </Card>
       </div>

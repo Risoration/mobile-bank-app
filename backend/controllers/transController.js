@@ -10,6 +10,16 @@ export const getUserTransactions = async (req, res) => {
     const userDoc = await User.findById(userId).select('accessToken');
     const accessToken = userDoc?.accessToken;
 
+    // Check if user has an access token
+    if (!accessToken) {
+      return res.json({
+        transactions: [],
+        summary: { income: 0, expenses: 0, categories: {} },
+        message:
+          'No bank account connected. Please connect a bank account to view transactions.',
+      });
+    }
+
     const response = await client.transactionsGet({
       access_token: accessToken,
       start_date: start_date || '2024-01-01',
@@ -42,6 +52,23 @@ export const getUserTransactions = async (req, res) => {
       'Plaid transactions error:',
       error.response?.data || error.message
     );
+
+    // Handle specific Plaid error codes
+    const errorCode = error.response?.data?.error_code;
+
+    if (
+      errorCode === 'INVALID_ACCESS_TOKEN' ||
+      errorCode === 'ITEM_LOGIN_REQUIRED'
+    ) {
+      return res.json({
+        transactions: [],
+        summary: { income: 0, expenses: 0, categories: {} },
+        message:
+          'Your bank connection needs to be updated. Please reconnect your bank account.',
+        error_code: errorCode,
+      });
+    }
+
     res.status(500).json({ error: error.response?.data || error.message });
   }
 };

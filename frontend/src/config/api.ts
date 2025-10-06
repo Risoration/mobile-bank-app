@@ -3,7 +3,7 @@ const getApiBaseUrl = () => {
   // Check if we're in development mode
   if (import.meta.env.DEV) {
     // Development: use localhost backend
-    return 'http://localhost:5000';
+    return `http://localhost:5000`;
   } else {
     // Production: use Render backend
     return 'https://revolve-bank-api.onrender.com';
