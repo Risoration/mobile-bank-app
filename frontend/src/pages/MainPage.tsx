@@ -8,11 +8,14 @@ import axios from 'axios';
 import Sidebar from '../components/Sidebar';
 import React from 'react';
 import Budgets from '../components/Budgets';
+import Modal from '../components/Modal';
+import Login from '../pages/Login';
 
 export default function MainPage() {
   const { user, loading } = useContext(UserContext);
   const [accounts, setAccounts] = useState([]);
   const [transactions, setTransactions] = useState([]);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const [pageView, setPageView] = useState('dashboard');
   const [startDate, setStartDate] = useState('2025-01-01');
@@ -54,10 +57,32 @@ export default function MainPage() {
     );
   }
 
-  // Redirect to home if no user (not authenticated)
+  // Show login modal if no user (not authenticated)
   if (!user) {
-    window.location.href = '/';
-    return null;
+    return (
+      <>
+        <div className='h-full font-thin bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))] flex items-center justify-center'>
+          <div className='text-center'>
+            <h2 className='text-2xl font-bold mb-4'>
+              Please log in to continue
+            </h2>
+            <p className='text-gray-500 mb-6'>
+              You need to be logged in to access this page.
+            </p>
+            <button
+              onClick={() => setShowLoginModal(true)}
+              className='bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors'
+            >
+              Log In
+            </button>
+          </div>
+        </div>
+
+        <Modal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)}>
+          <Login switchToRegister={() => {}} setModalOpen={setShowLoginModal} />
+        </Modal>
+      </>
+    );
   }
 
   return (
