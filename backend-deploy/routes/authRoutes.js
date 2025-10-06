@@ -18,6 +18,7 @@ router.use(
       'https://revolve-bank.vercel.app',
       'https://revolve-bank-app.vercel.app',
       'https://revolve-bank-app-git-main-risoration.vercel.app',
+      'https://revolve-serverless-function-express.vercel.app',
     ],
   })
 );
@@ -30,6 +31,7 @@ router.options(
       'https://revolve-bank.vercel.app',
       'https://revolve-bank-app.vercel.app',
       'https://revolve-bank-app-git-main-risoration.vercel.app',
+      'https://revolve-serverless-function-express.vercel.app',
     ],
   })
 );
