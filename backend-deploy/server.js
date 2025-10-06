@@ -13,6 +13,13 @@ import cookieParser from 'cookie-parser';
 // Load environment variables
 dotenv.config();
 
+// Log environment info (without sensitive data)
+console.log('🔧 Environment check:');
+console.log('- NODE_ENV:', process.env.NODE_ENV || 'development');
+console.log('- PORT:', process.env.PORT || 5000);
+console.log('- MONGO_URI exists:', !!process.env.MONGO_URI);
+console.log('- JWT_SECRET exists:', !!process.env.JWT_SECRET);
+
 const app = express();
 
 // Connect to database
@@ -62,7 +69,15 @@ app.use('/api/users', userRoutes);
 app.use('/api/budgets', budgetRoutes);
 app.use('/api/transactions', transRoutes);
 
-// Add a health check route for testing
+// Add health check routes for testing
+app.get('/health', (req, res) => {
+  res.json({
+    message: 'Server is running!',
+    status: 'success',
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.get('/api/', (req, res) => {
   res.json({
     message: 'API is working!',
@@ -71,11 +86,19 @@ app.get('/api/', (req, res) => {
   });
 });
 
-// Start the server (always for Render)
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+// Initialize database connection first, then start server
+const startServer = async () => {
+  try {
+    await initializeServer();
 
-// Initialize database connection
-initializeServer();
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('❌ Failed to start server:', error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
