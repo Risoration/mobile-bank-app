@@ -36,10 +36,16 @@ export function UserContextProvider({
     async function checkAuth() {
       try {
         setLoading(true);
+        console.log('Checking authentication...');
+
         const { data } = await axios.get(
-          `${API_CONFIG.ENDPOINTS.AUTH}/profile`
+          `${API_CONFIG.ENDPOINTS.AUTH}/profile`,
+          { withCredentials: true }
         );
-        if (data) {
+
+        console.log('Profile response:', data);
+
+        if (data && data.id) {
           const normalized = {
             id: data.id || data._id,
             email: data.email,
@@ -50,6 +56,7 @@ export function UserContextProvider({
           setUser(normalized);
           console.log('User authenticated:', normalized);
         } else {
+          console.log('No valid user data received');
           setUser(null);
         }
       } catch (error) {

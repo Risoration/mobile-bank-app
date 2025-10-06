@@ -10,7 +10,7 @@ import React from 'react';
 import Budgets from '../components/Budgets';
 
 export default function MainPage() {
-  const { user } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
   const [accounts, setAccounts] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
@@ -41,6 +41,24 @@ export default function MainPage() {
   useEffect(() => {
     fetchData();
   }, [user, startDate, endDate]);
+
+  // Show loading state while checking authentication
+  if (loading) {
+    return (
+      <div className='h-full font-thin bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))] flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4'></div>
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect to home if no user (not authenticated)
+  if (!user) {
+    window.location.href = '/';
+    return null;
+  }
 
   return (
     <div className='h-full font-thin bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))]'>

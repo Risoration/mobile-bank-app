@@ -106,15 +106,23 @@ export const loginUser = async (req, res) => {
 };
 
 export const getProfile = async (req, res) => {
-  const { token } = req.cookies;
+  try {
+    const { token } = req.cookies;
 
-  if (token) {
+    if (!token) {
+      return res.json(null);
+    }
+
     jwt.verify(token, process.env.JWT_SECRET, {}, (error, user) => {
-      if (error) throw error;
+      if (error) {
+        console.log('JWT verification error:', error.message);
+        return res.json(null);
+      }
+      console.log('Profile user:', user);
       res.json(user);
-      console.log(user);
     });
-  } else {
+  } catch (error) {
+    console.log('Profile error:', error.message);
     res.json(null);
   }
 };
