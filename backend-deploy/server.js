@@ -30,7 +30,6 @@ const initializeServer = async () => {
 app.use(express.json()); // Middleware to parse JSON data
 // CORS configuration for production
 const allowedOrigins = [
-  'http://localhost:5173', // Development
   'https://revolve-bank.vercel.app', // Main production frontend domain
   'https://revolve-bank-app.vercel.app', // Alternative Vercel domain
   'https://revolve-bank-app-git-main-risoration.vercel.app', // Vercel preview deployments

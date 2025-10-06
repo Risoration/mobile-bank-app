@@ -26,7 +26,7 @@ export const updateUser = async (req, res) => {
   const user = req.body;
 
   try {
-    const updatedUser = await User.findByIdAndUpdate(id, user, {
+    const updatedUser = await UserModel.findByIdAndUpdate(id, user, {
       new: true,
     });
     res.status(200).json({ success: true, data: updatedUser });
@@ -37,7 +37,7 @@ export const updateUser = async (req, res) => {
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await UserModel.find({});
     res.status(200).json({ success: true, data: users });
   } catch (error) {
     console.error(`Error while fetching users: ${error.message}`);
@@ -52,7 +52,7 @@ export const getUserById = async (req, res) => {
     return res.status(404).json({ success: false, message: 'Invalid ID' });
   }
   try {
-    const user = await User.findById(id);
+    const user = await UserModel.findById(id);
     if (!user) {
       return res
         .status(404)
@@ -68,7 +68,7 @@ export const getUserById = async (req, res) => {
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  User.findOne({ email: email }).then((user) => {
+  UserModel.findOne({ email: email }).then((user) => {
     if (user) {
       if (user.password === password) {
         res.status(200).json({ success: true });
@@ -92,7 +92,7 @@ export const deleteUser = async (req, res) => {
   }
 
   try {
-    await User.findByIdAndDelete(id);
+    await UserModel.findByIdAndDelete(id);
     res.status(200).json({ success: true, message: 'User deleted' });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server error' });
@@ -103,7 +103,7 @@ export const deleteUser = async (req, res) => {
 export const hasAccessToken = async (req, res) => {
   try {
     const { userId } = req.params;
-    const userDoc = await User.findById(userId).select('accessToken');
+    const userDoc = await UserModel.findById(userId).select('accessToken');
     const hasAccessToken = Boolean(userDoc?.accessToken);
     res.json({ hasAccessToken });
   } catch (error) {
