@@ -91,12 +91,19 @@ export const loginUser = async (req, res) => {
         lastname: user.lastname,
       },
       process.env.JWT_SECRET,
-      {},
+      { expiresIn: '10m' },
       (error, token) => {
         if (error) {
           throw error;
         }
-        res.cookie('token', token).json(user);
+        res
+          .cookie('token', token, {
+            httpOnly: true,
+            secure: true, // Use secure cookies in production
+            sameSite: 'none', // Allow cross-origin cookies
+            maxAge: 10 * 60 * 1000, // 10 minutes
+          })
+          .json(user);
       }
     );
   } catch (error) {
@@ -106,15 +113,26 @@ export const loginUser = async (req, res) => {
 };
 
 export const getProfile = async (req, res) => {
-  const { token } = req.cookies;
+  try {
+    console.log('Profile request - cookies:', req.cookies);
+    const { token } = req.cookies;
 
-  if (token) {
+    if (!token) {
+      console.log('No token found in cookies');
+      return res.json(null);
+    }
+
+    console.log('Token found, verifying...');
     jwt.verify(token, process.env.JWT_SECRET, {}, (error, user) => {
-      if (error) throw error;
+      if (error) {
+        console.log('JWT verification error:', error.message);
+        return res.json(null);
+      }
+      console.log('Profile user:', user);
       res.json(user);
-      console.log(user);
     });
-  } else {
+  } catch (error) {
+    console.log('Profile error:', error.message);
     res.json(null);
   }
 };
@@ -125,8 +143,8 @@ export const logoutUser = async (req, res) => {
     // Clear the JWT token cookie
     res.clearCookie('token', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: true,
+      sameSite: 'none',
     });
 
     res.json({ message: 'Logged out successfully' });
