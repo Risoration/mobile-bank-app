@@ -11,6 +11,7 @@ import MainPage from './pages/MainPage';
 import './index.css';
 import Modal from './components/Modal';
 import Login from './pages/Login';
+import Pricing from './pages/Pricing';
 
 type ModalView = 'input' | 'login' | 'register';
 
@@ -42,24 +43,13 @@ const App: React.FC = () => {
             />
 
             <Routes>
-              <Route
-                path='/'
-                element={<Home />}
-              />
-              <Route
-                path='/home'
-                element={<Home />}
-              />
-              <Route
-                path='/main'
-                element={<MainPage />}
-              />
+              <Route path='/' element={<Home />} />
+              <Route path='/home' element={<Home />} />
+              <Route path='/main' element={<MainPage />} />
+              <Route path='/pricing' element={<Pricing />} />
             </Routes>
 
-            <Modal
-              isOpen={modalOpen}
-              onClose={() => setModalOpen(false)}
-            >
+            <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
               {modalView === 'login' && (
                 <Login
                   switchToRegister={() => setModalView('register')}

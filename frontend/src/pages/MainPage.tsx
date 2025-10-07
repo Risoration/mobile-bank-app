@@ -8,18 +8,32 @@ import axios from 'axios';
 import Sidebar from '../components/Sidebar';
 import React from 'react';
 import Budgets from '../components/Budgets';
-import Modal from '../components/Modal';
-import Login from '../pages/Login';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 export default function MainPage() {
   const { user, loading } = useContext(UserContext);
   const [accounts, setAccounts] = useState([]);
   const [transactions, setTransactions] = useState([]);
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  const [pageView, setPageView] = useState('dashboard');
   const [startDate, setStartDate] = useState('2025-01-01');
   const [endDate, setEndDate] = useState('2025-12-31');
+
+  // Get current tab from URL or default to 'dashboard'
+  const currentTab = searchParams.get('tab') || 'dashboard';
+
+  // Function to handle tab changes
+  const handleTabChange = (tab: string) => {
+    setSearchParams({ tab });
+  };
+
+  // Redirect to default tab if no tab is specified
+  useEffect(() => {
+    if (!searchParams.get('tab')) {
+      setSearchParams({ tab: 'dashboard' }, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
 
   const fetchData = async () => {
     if (!user) return;
@@ -57,51 +71,34 @@ export default function MainPage() {
     );
   }
 
-  // Show login modal if no user (not authenticated)
+  // Redirect to home if no user (not authenticated)
   if (!user) {
-    return (
-      <>
-        <div className='h-full font-thin bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))] flex items-center justify-center'>
-          <div className='text-center'>
-            <h2 className='text-2xl font-bold mb-4'>
-              Please log in to continue
-            </h2>
-            <p className='text-gray-500 mb-6'>
-              You need to be logged in to access this page.
-            </p>
-            <button
-              onClick={() => setShowLoginModal(true)}
-              className='bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors'
-            >
-              Log In
-            </button>
-          </div>
-        </div>
-
-        <Modal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)}>
-          <Login switchToRegister={() => {}} setModalOpen={setShowLoginModal} />
-        </Modal>
-      </>
-    );
+    window.location.href = '/';
+    return null;
   }
 
   return (
     <div className='h-full font-thin bg-[rgb(var(--color-theme-background))] text-[color:rgb(var(--color-theme-text-primary))]'>
       <div className='flex flex-col md:flex-row justify-between m-3 h-fit bg-[rgb(var(--color-theme-background))]'>
         {/* Sidebar */}
-        <Sidebar onViewChange={setPageView} />
+        <Sidebar
+          activeView={currentTab}
+          onViewChange={handleTabChange}
+          onUpgrade={() => navigate('/pricing')}
+        />
 
         {/* Main Content */}
         <main className='flex-1 p-3 md:p-6 overflow-y-auto rounded-2xl bg-[rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))] mb-2 md:ml-0'>
-          {pageView === 'dashboard' && (
+          {currentTab === 'dashboard' && (
             <Dashboard accounts={accounts} transactions={transactions} />
           )}
-          {pageView === 'accounts' && (
+          {currentTab === 'accounts' && (
             <Accounts accounts={accounts} onAccountsUpdate={fetchData} />
           )}
-          {pageView === 'transactions' && (
+          {currentTab === 'transactions' && (
             <Transactions
               transactions={transactions}
+              accounts={accounts}
               startDate={startDate}
               endDate={endDate}
               onChangeDateRange={(s, e) => {
@@ -110,8 +107,16 @@ export default function MainPage() {
               }}
             />
           )}
-          {pageView === 'budgets' && <Budgets />}
-          {pageView === 'settings' && <Settings />}
+          {currentTab === 'budgets' && <Budgets />}
+          {currentTab === 'reports' && (
+            <div className='p-8 text-center'>
+              <h2 className='text-2xl font-bold mb-4'>Reports</h2>
+              <p className='text-[color:rgb(var(--color-theme-text-secondary))]'>
+                Reports feature coming soon!
+              </p>
+            </div>
+          )}
+          {currentTab === 'settings' && <Settings />}
         </main>
       </div>
     </div>

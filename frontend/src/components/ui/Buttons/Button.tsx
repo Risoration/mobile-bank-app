@@ -55,7 +55,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variants = {
       primary:
-        'bg-[rgb(var(--color-theme-primary))] hover:bg-[rgb(var(--color-theme-primary)/0.9)] text-[color:rgb(var(--color-theme-text-button))] border border-[rgb(var(--color-theme-border))]',
+        'w-full bg-[rgb(var(--color-theme-primary))] hover:bg-[rgb(var(--color-theme-primary)/0.9)] text-[color:rgb(var(--color-theme-text-button))] border border-[rgb(var(--color-theme-border))]',
       secondary:
         'bg-[rgb(var(--color-theme-surface))] hover:bg-[rgb(var(--color-theme-muted))] text-[color:rgb(var(--color-theme-text-button))] border border-[rgb(var(--color-theme-border))]',
       success:

@@ -26,7 +26,7 @@ import Button from './ui/Buttons/Button';
 
 type TransactionsProps = {
   transactions: any[];
-  // transactions: Transactions[];
+  accounts: any[];
   startDate?: string;
   endDate?: string;
   sort?: 'amount_asc' | 'amount_desc' | 'date_asc' | 'date_desc';
@@ -38,6 +38,7 @@ type SortKey = 'amount_asc' | 'amount_desc' | 'date_asc' | 'date_desc';
 
 export default function Transactions({
   transactions,
+  accounts = [],
   startDate,
   endDate,
   sort,
@@ -68,6 +69,24 @@ export default function Transactions({
       return iso;
     }
   };
+
+  const getAccountName = (accId: string) => {
+    const account = accounts.find(
+      (acc) => acc.account_id === accId || acc.id === accId
+    );
+    return account?.name || account?.official_name || accId;
+  };
+
+  const getAccountOptions = useMemo(() => {
+    const accountMap = new Map<string, string>();
+    for (const t of transactions || []) {
+      if (t?.account_id) {
+        const accountName = getAccountName(t.account_id);
+        accountMap.set(t.account_id, accountName);
+      }
+    }
+    return accountMap;
+  }, [transactions, accounts]);
 
   const accountOptions = useMemo(() => {
     const ids = new Set<string>();
@@ -214,14 +233,14 @@ export default function Transactions({
                 onChange={(e) => setAccountFilter(e.target.value)}
                 className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none text-end focus:ring-2 focus:ring-white/20'
               >
-                {accountOptions.map((opt) => (
-                  <option
-                    key={opt}
-                    value={opt}
-                  >
-                    {opt === 'all' ? 'All accounts' : opt}
-                  </option>
-                ))}
+                <option value='all'>All accounts</option>
+                {Array.from(getAccountOptions.entries()).map(
+                  ([accountId, accountName]) => (
+                    <option key={accountId} value={accountId}>
+                      {accountName}
+                    </option>
+                  )
+                )}
               </select>
             </div>
 
@@ -235,10 +254,7 @@ export default function Transactions({
                 className='bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none text-end focus:ring-2 focus:ring-white/20'
               >
                 {categoryOptions.map((opt) => (
-                  <option
-                    key={opt}
-                    value={opt}
-                  >
+                  <option key={opt} value={opt}>
                     {opt === 'all' ? 'All categories' : opt}
                   </option>
                 ))}
@@ -314,7 +330,7 @@ export default function Transactions({
                         )}
                       </div>
                       <div className='col-span-2 text-[color:rgb(var(--cololr-theme-text-secondary))] truncate'>
-                        {tx.account_id}
+                        {getAccountName(tx.account_id)}
                       </div>
                       <div className='col-span-3 text-[color:rgb(var(--cololr-theme-text-secondary))] truncate'>
                         {categories}

@@ -3,14 +3,15 @@ import {
   Building2,
   PieChart,
   FileText,
-  Settings,
   ArrowLeftCircle,
   Building,
   Menu,
   X,
+  Crown,
 } from 'lucide-react';
 import Button from './ui/Buttons/Button';
 import { UserContext } from '../../context/userContext';
+import { useNavigate } from 'react-router-dom';
 
 interface SidebarProps {
   activeView: string;
@@ -24,44 +25,58 @@ const navigation = [
   { id: 'transactions', label: 'Transactions', icon: ArrowLeftCircle },
   { id: 'budgets', label: 'Budgets', icon: PieChart, premium: true },
   { id: 'reports', label: 'Reports', icon: FileText, premium: true },
-  { id: 'settings', label: 'Settings', icon: Settings },
+  { id: 'pricing', label: 'Upgrade to Premium', icon: Crown },
 ];
 
-export default function Sidebar({ onViewChange }) {
+export default function Sidebar({ activeView, onViewChange, onUpgrade }) {
   const { user } = useContext(UserContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleViewChange = (view) => {
-    onViewChange(view);
+    if (view === 'pricing') {
+      onUpgrade();
+    } else {
+      onViewChange(view);
+    }
     setIsMobileMenuOpen(false);
   };
 
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className='hidden md:block w-55 shadow-md p-4 flex flex-col items-center rounded-2xl h-screen mr-5 bg-[rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'>
+      <aside className='md:block w-55 shadow-md p-4 flex flex-col items-center rounded-2xl h-screen mr-5 bg-[rgb(var(--color-theme-surface))] text-[color:rgb(var(--color-theme-text-primary))]'>
         <nav className='flex flex-col w-full'>
           {navigation.map((item) => {
             const Icon = item.icon;
             const isDisabled =
               item.premium && user?.subscriptionTier === 'free';
+            const isActive = activeView === item.id;
 
             return (
-              <div
-                key={item.id}
-                className='relative group'
-              >
+              <div key={item.id} className='relative group'>
                 <span
                   className='d-inline-block w-full'
                   data-toggle='tooltip'
-                  title='Upgrade to Revolve Premium to access this feature'
+                  title={
+                    isDisabled
+                      ? 'Upgrade to Revolve Premium to access this feature'
+                      : ''
+                  }
                 >
                   <Button
-                    variant={item.premium ? 'premium' : 'aside'}
-                    className={`px-4 py-2 rounded ${
-                      isDisabled ? 'pointer-events-none' : ''
+                    variant={
+                      item.premium ? 'premium' : isActive ? 'primary' : 'aside'
+                    }
+                    className={`px-4 py-2 rounded transition-all duration-200 ${
+                      isDisabled ? 'pointer-events-none opacity-50' : ''
+                    } ${
+                      isActive
+                        ? 'ring-2 ring-[rgb(var(--color-theme-accent))]'
+                        : ''
                     }`}
-                    onClick={() => onViewChange(item.id)}
+                    onClick={() => handleViewChange(item.id)}
                     disabled={isDisabled}
                   >
                     <Icon className='w-5 h-5' />
@@ -100,13 +115,24 @@ export default function Sidebar({ onViewChange }) {
                     const Icon = item.icon;
                     const isDisabled =
                       item.premium && user?.subscriptionTier === 'free';
+                    const isActive = activeView === item.id;
 
                     return (
                       <Button
                         key={item.id}
-                        variant={item.premium ? 'premium' : 'aside'}
-                        className={`w-full justify-start px-4 py-3 rounded ${
+                        variant={
+                          item.premium
+                            ? 'premium'
+                            : isActive
+                            ? 'primary'
+                            : 'aside'
+                        }
+                        className={`w-full justify-between px-4 py-3 rounded transition-all duration-200 ${
                           isDisabled ? 'pointer-events-none opacity-50' : ''
+                        } ${
+                          isActive
+                            ? 'ring-2 ring-[rgb(var(--color-theme-accent))]'
+                            : ''
                         }`}
                         onClick={() => handleViewChange(item.id)}
                         disabled={isDisabled}

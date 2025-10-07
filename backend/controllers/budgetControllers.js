@@ -41,6 +41,7 @@ export const getBudgetById = async (req, res) => {
     if (!budget) {
       return res.status(404).json({ message: 'Budget not found' });
     }
+    return res.status(200).json({ success: true, data: budget });
   } catch (err) {
     console.error('Error fetching budget by ID:', err);
     res.status(500).json({ message: 'Server error' });
@@ -56,6 +57,7 @@ export const updateBudget = async (req, res) => {
     });
     if (!updatedBudget)
       return res.status(404).json({ message: 'Budget not found' });
+    return res.status(200).json({ success: true, data: updatedBudget });
   } catch (err) {
     console.error('Error updating budget:', err);
     res.status(500).json({ message: 'Server error' });
