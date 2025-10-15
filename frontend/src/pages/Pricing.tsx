@@ -161,7 +161,10 @@ export const Pricing = () => {
 
                 <ul className='space-y-3 mb-8 text-left'>
                   {tier.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className='flex items-start gap-3'>
+                    <li
+                      key={featureIndex}
+                      className='flex items-start gap-3'
+                    >
                       <Check className='w-5 h-5 text-green-500 mt-0.5 flex-shrink-0' />
                       <span className='text-sm'>{feature}</span>
                     </li>
@@ -189,7 +192,10 @@ export const Pricing = () => {
           <h2 className='text-3xl font-bold mb-12'>Why Choose Revolve?</h2>
           <div className='grid md:grid-cols-3 gap-8'>
             {additionalFeatures.map((feature, index) => (
-              <div key={index} className='text-center'>
+              <div
+                key={index}
+                className='text-center'
+              >
                 <div className='flex justify-center mb-4 text-[rgb(var(--color-theme-accent))]'>
                   {feature.icon}
                 </div>
@@ -256,6 +262,7 @@ export const Pricing = () => {
           </p>
           <Button
             variant='primary'
+            className='mx-auto w-auto'
             size='xl'
             onClick={() => {
               // Handle sign up

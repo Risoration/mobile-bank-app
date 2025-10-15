@@ -34,7 +34,7 @@ export const getUserTransactions = async (req, res) => {
       .reduce((sum, tx) => sum + tx.amount, 0);
 
     const expenses = transactions
-      .filter((t) => t.amouunt > 0)
+      .filter((t) => t.amount > 0)
       .reduce((sum, tx) => sum + tx.amount, 0);
 
     const categories = {};

@@ -50,6 +50,6 @@ router.options(
 
 router.get('/:userId', getUserTransactions);
 
-router.get('/sync/:userId', syncTransactions);
+router.post('/sync/:userId', syncTransactions);
 
 export default router;

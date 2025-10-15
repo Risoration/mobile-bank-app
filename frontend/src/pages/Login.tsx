@@ -24,10 +24,14 @@ const Login = ({ switchToRegister, setModalOpen }) => {
     const { email, password } = data;
 
     try {
-      const { data } = await axios.post(`${API_CONFIG.ENDPOINTS.AUTH}/login`, {
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        `${API_CONFIG.ENDPOINTS.AUTH}/login`,
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
       if (data.error) {
         toast.error(data.error);
       } else {

@@ -3,8 +3,23 @@ import { Configuration, PlaidApi, PlaidEnvironments } from 'plaid';
 
 dotenv.config();
 
+// Determine Plaid environment based on PLAID_ENV variable
+const getPlaidEnvironment = () => {
+  const env = process.env.PLAID_ENV || 'sandbox';
+
+  switch (env) {
+    case 'production':
+      return PlaidEnvironments.production;
+    case 'development':
+      return PlaidEnvironments.development;
+    case 'sandbox':
+    default:
+      return PlaidEnvironments.sandbox;
+  }
+};
+
 const config = new Configuration({
-  basePath: PlaidEnvironments.sandbox, // or .development / .production
+  basePath: getPlaidEnvironment(),
   baseOptions: {
     headers: {
       'PLAID-CLIENT-ID': process.env.PLAID_CLIENT_ID,
@@ -12,5 +27,7 @@ const config = new Configuration({
     },
   },
 });
+
+console.log(`🔐 Plaid environment: ${process.env.PLAID_ENV || 'sandbox'}`);
 
 export const client = new PlaidApi(config);

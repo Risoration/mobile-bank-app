@@ -115,7 +115,9 @@ export default function Dashboard({ accounts, transactions }) {
           </select>
         </div>
         <div className='flex flex-col text-center'>
-          <ConnectBankButton></ConnectBankButton>
+          <ConnectBankButton
+            onBankConnected={() => window.location.reload()}
+          ></ConnectBankButton>
           <p className='text-[color:rgb(var(--color-theme-text-secondary))] text-lg'>
             {totalAccounts} Accounts Connected
           </p>

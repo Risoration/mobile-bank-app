@@ -99,8 +99,8 @@ export const loginUser = async (req, res) => {
         res
           .cookie('token', token, {
             httpOnly: true,
-            secure: true, // Use secure cookies in production
-            sameSite: 'none', // Allow cross-origin cookies
+            secure: process.env.NODE_ENV === 'production', // Only secure in production
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-origin in production, 'lax' for localhost
             maxAge: 10 * 60 * 1000, // 10 minutes
           })
           .json(user);
@@ -143,8 +143,8 @@ export const logoutUser = async (req, res) => {
     // Clear the JWT token cookie
     res.clearCookie('token', {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     });
 
     res.json({ message: 'Logged out successfully' });
